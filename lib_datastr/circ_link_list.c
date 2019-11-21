@@ -3,10 +3,10 @@
 #include "node.h"
 
 struct node *first;
-
-void init_cl(int val){
+/* first element will always be 0 */
+void init_cl(){
     first = (struct node *) malloc (sizeof *first);
-    first->key = val;
+    first->key = 0;
     first->next = first;
 }
 
@@ -25,6 +25,18 @@ void traverse_list(){
     tmp=tmp->next;
     while(tmp != first){
         printf("%d, ", tmp->key);
+        tmp = tmp->next;
+    }
+}
+
+void clist_to_array(int *a, int size){
+    struct node *tmp;
+    tmp = first->next;
+    int i = 0;
+    /*a[i++] = tmp->key;*/
+    /*tmp = tmp->next*/
+    while(tmp != first && i < size){
+        a[i++] = tmp->key;
         tmp = tmp->next;
     }
 }

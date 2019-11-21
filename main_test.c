@@ -88,18 +88,15 @@ void run_data_structure_tests(){
     int answ[5];
     int list_correct[5] = {6,7,8,9,3};
     // Test linked list
-    init(3); insert_front(9); insert_front(8); insert_front(7); insert_front(6);
+    init_ll(3); insert_front(9); insert_front(8); insert_front(7); insert_front(6);
     list_to_array(answ, 5);
     test_int_array_equal(list_correct, answ, 5);
 
-    /*print_list();*/
-    
+    int answ2[5];
     // Test circular linked list
-    /*init_cl(3);*/
-    /*insert_cl(9);*/
-    /*insert_cl(8);*/
-    /*insert_cl(7);*/
-    /*insert_cl(6);*/
+    init_cl(); insert_cl(3); insert_cl(9); insert_cl(8); insert_cl(7); insert_cl(6);
+    clist_to_array(answ2, 5);
+    test_int_array_equal(list_correct, answ2, 5);
     /*traverse_list();*/
 }
 

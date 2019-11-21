@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "node.h"
 #include "linked_list.h"
 
 struct node *head, *trailer;
 
-void init(int x){
+void init_ll(int x){
     head = (struct node *) malloc(sizeof *head);
     trailer = (struct node *) malloc (sizeof *trailer);
     head->key = x;

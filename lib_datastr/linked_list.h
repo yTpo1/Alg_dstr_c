@@ -1,5 +1,5 @@
 #include "node.h"
-void init(int x);
+void init_ll(int x);
 void deletenext(struct node *);
 //struct node *insert_after(int value, struct node *n);
 void insert_front(int x);

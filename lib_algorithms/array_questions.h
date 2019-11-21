@@ -1,0 +1,10 @@
+void insertion_sort(int a[], int size);
+void insertion_sort_char(char s[], int size);
+int binary_search(int a[], int x, int l, int r);
+void quick_sort(int a[], int l, int r); 
+void merge_sort(int a[], int l, int r);
+void bubble_sort(int *a, int size);
+void straignt_selection(int* a, int size);
+void heap_sort(int *a,int size);
+int get_median(int *a, int size);
+void min_heapify(int *heap, int size);

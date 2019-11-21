@@ -21,13 +21,13 @@ void deletenext(struct node *n){
 struct node *insert_after(int value, struct node *n){
     struct node *new;
     new = (struct node *) malloc (sizeof *new); 
-    new->next = n->next;
-    n->next = new;
+    new->next = n;
+    head = new;
     new->key = value;
     return new;
 }
 
-void insert(int x){
+void insert_front(int x){
     insert_after(x, head);
 }
 
@@ -41,6 +41,16 @@ void print_list(){
     tmp = head;
     while(tmp != trailer){
         printf("%d,", tmp->key);
+        tmp = tmp->next;
+    }
+}
+
+void list_to_array(int *a, int size){
+    struct node *tmp;
+    tmp = head;
+    int i = 0;
+    while(tmp != trailer && i < size){
+        a[i++] = tmp->key;
         tmp = tmp->next;
     }
 }

@@ -10,11 +10,13 @@
 void run_number_tests();
 void run_array_tests();
 void run_str_tests();
+void run_data_structure_tests();
 void reset_dummy_array(int *a);
 
 int main(int argc, char* argv[]){
     run_array_tests();
     run_str_tests();
+    run_data_structure_tests();
 
     print_test_status();
     return 0;
@@ -83,12 +85,13 @@ void run_number_tests(){
 }
 
 void run_data_structure_tests(){
+    int answ[5];
+    int list_correct[5] = {6,7,8,9,3};
     // Test linked list
-    /*init(3);*/
-    /*insert(9);*/
-    /*insert(8);*/
-    /*insert(7);*/
-    /*insert(6);*/
+    init(3); insert_front(9); insert_front(8); insert_front(7); insert_front(6);
+    list_to_array(answ, 5);
+    test_int_array_equal(list_correct, answ, 5);
+
     /*print_list();*/
     
     // Test circular linked list

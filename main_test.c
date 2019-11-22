@@ -4,6 +4,7 @@
 #include "lib_algorithms/numbers.h"
 #include "lib_datastr/linked_list.h"
 #include "lib_datastr/circ_link_list.h"
+#include "lib_datastr/binary_tree.h"
 
 #define SIZEMAX 1000
 
@@ -98,6 +99,11 @@ void run_data_structure_tests(){
     clist_to_array(answ2, 5);
     test_int_array_equal(list_correct, answ2, 5);
     /*traverse_list();*/
+
+    init_btree(10);
+    insert_btree(8);
+    insert_btree(17);
+    traverse_btree();
 }
 
 void run_str_tests(){

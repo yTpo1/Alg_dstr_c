@@ -1,5 +1,7 @@
+*.o
 *.out
-tags
 *.swap
 *.swp
 *.gch
+tags
+unit_tests

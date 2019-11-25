@@ -100,10 +100,17 @@ void run_data_structure_tests(){
     test_int_array_equal(list_correct, answ2, 5);
     /*traverse_list();*/
 
+    int btree_answ[5] = {4,8,10,13,17};
+    int *btree_trav;
     init_btree(10);
     insert_btree(8);
     insert_btree(17);
-    traverse_btree();
+    insert_btree(4);
+    insert_btree(13);
+    btree_trav = traverse_btree();
+    //traverse_btree_to_a(btree_trav);
+    test_int_array_equal(btree_answ, btree_trav, 5);
+
 }
 
 void run_str_tests(){

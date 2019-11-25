@@ -1,4 +1,5 @@
 
 void init_btree(int x);
 void insert_btree(int x);
-void traverse_btree();
+int *traverse_btree();
+void traverse_btree_to_a(int *a);

@@ -3,7 +3,7 @@
 #include <sys/resource.h>
 
 #define ASIZE 1000
-int count_test_run = 0;
+int count_test_run = 0, count_test_failed = 0;
 
 void print_int_array(int a[], int size){
     for(int i=0; i<size; i++)
@@ -11,18 +11,34 @@ void print_int_array(int a[], int size){
     printf("\n");
 }
 
-void test_int_array_equal(int a[], int b[], int size){
+/*int intarrcmp(int *a, int *b){*/
+    /*while(*a++==*b++)*/
+        /*if(*a=='\0')*/
+            /*return 0;*/
+    /*return *a - *b;*/
+/*}*/
+
+/*void t_iarray_eq(int *a, int *b, char *title){*/
+    /*if(intarrcmp(a, b)){*/
+        /*printf("Test \"%s\": int array comparison. \033[0;31m Failed \033[0m \n", title);*/
+        /*count_test_failed++;*/
+    /*}*/
+    /*count_test_run++;*/
+/*}*/
+
+void test_intarray_eq(int *a, int *b, int size, char *title){
     int i = 0;
     while(a[i]==b[i] && i<size)
         i++;
     
     if(a[i]!=b[i]){
-        printf("Test: int array comparison. \033[0;31m Failed \033[0m \n");
+        printf("Test \"%s\": int array comparison. \033[0;31m Failed \033[0m \n", title);
         //printf("\n a[%d]:%d != b[%d]:%d\n", i,a[i],i,b[i]);
         printf("Array 1: ");
         print_int_array(a, size);
         printf("Array 2: ");
         print_int_array(b, size);
+        count_test_failed++;
     }
     count_test_run++; 
 }
@@ -47,23 +63,27 @@ int my_strequal(char *s1, char *s2){
 
 void test_strequal(char *s1, char *s2, char *testname){
     if(!my_strequal(s1, s2)){
-        printf("Name: %s\n", testname);
-        printf("Test: String comparison. \033[0;31m Failed \033[0m \n");
+        /*printf("Name: %s\n", testname);*/
+        printf("Test \"%s\": String comparison. \033[0;31m Failed \033[0m \n", testname);
         printf("%s != %s \n", s1, s2);
+        count_test_failed++;
     }
     count_test_run++;
 }
 
 void test_intequal(int a, int b, char *testname){
     if(a!=b){
-        printf("Name: %s\n", testname);
-        printf("\n%d!=%d\n",a,b);
+        printf("Test \"%s\": int comparison \033[0;31m Failed \033[0m \n", testname);
+        printf("%d!=%d\n",a,b);
+        count_test_failed++;
     }
     count_test_run++;
 }
 
 void print_test_status(){
     printf("--------------------------\n");
+    if(count_test_failed > 0)
+        printf("Tests \033[0;31m failed \033[0m: %d\n", count_test_failed);
     printf("Tests run: %d\n", count_test_run);
 
 }

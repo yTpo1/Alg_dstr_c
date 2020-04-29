@@ -7,6 +7,7 @@ void merge(int a[], int l, int m, int r);
 // shit elements for heap sort
 void sift(int *a, int l, int r);
 
+/* Sorting algorithm */
 void quick_sort(int a[], int l, int r){
     int p=0;
     if(l<r){
@@ -25,6 +26,7 @@ int partition(int a[], int l, int r){
     return j+1;
 }
 
+/* Sorting algorithm */
 void merge_sort(int a[], int l, int r){
     if(l<r){
         int m = l + (r-l)/2;

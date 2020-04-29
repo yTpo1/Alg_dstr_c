@@ -9,6 +9,9 @@
 #define SIZEMAX 1000
 
 void run_number_tests();
+void test_find_max_min();
+void test_gcd();
+
 void run_array_tests();
 void run_str_tests();
 void run_data_structure_tests();
@@ -18,6 +21,7 @@ int main(int argc, char* argv[]){
     run_array_tests();
     run_str_tests();
     run_data_structure_tests();
+    run_number_tests();
 
     print_test_status();
     return 0;
@@ -42,32 +46,27 @@ void run_array_tests(){
     insertion_sort(unsorted_a, actual_size);
     test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Insertion Sort");
     /*t_iarray_eq(unsorted_a, sorted_answer, "Insertion Sort");*/
-    //test_int_array_equal(unsorted_a, sorted_answer, actual_size);
 
     // Unittest straight selection
     reset_dummy_array(unsorted_a);
     straignt_selection(unsorted_a, actual_size);
     test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Straight Selection");
-    /*test_int_array_equal(unsorted_a, sorted_answer, actual_size);*/
 
     // Unittest Quick Sort
     reset_dummy_array(unsorted_a);
     quick_sort(unsorted_a, 0, 9);
     test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Quick Sort");
-    /*test_int_array_equal(unsorted_a, sorted_answer, actual_size);*/
 
     // Unittest Merge Sort 
     reset_dummy_array(unsorted_a);
     merge_sort(unsorted_a, 0, 9);
     test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Merge Sort");
-    /*test_int_array_equal(unsorted_a, sorted_answer, actual_size);*/
 
 
     // Unittest bubble_sort
     reset_dummy_array(unsorted_a);
     bubble_sort(unsorted_a, actual_size);
     test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Bubble sort");
-    /*test_int_array_equal(unsorted_a, sorted_answer, actual_size);*/
 
     // Unittest Heap sort
     //reset_dummy_array(unsorted_a);
@@ -86,13 +85,29 @@ void run_array_tests(){
     /*int min_heapity = {1,*/
 }
 
-void run_number_tests(){
-    int a[SIZEMAX] = {2,1,4,76,2,7,26,8,9};
+void run_number_tests()
+{
+	test_gcd();
+	test_find_max_min();
+	//178486, 267702);
+}
+
+void test_gcd()
+{
+	int a1 = 0;
+	a1 = gcd(270, 192);
+	test_intequal(a1, 6, "gcd");
+}
+
+void test_find_max_min()
+{
+    int a[9] = {2,1,4,76,2,7,26,8,9};
+    int answ_correct[2] = {76, 1};
+    //answ_correct[0] = 76;
+    //answ_correct[1] = 1;
     int answ[2];
-    int answ_correct[2] = {76,1};
     find_max_min(a, 9, answ);
     test_intarray_eq(answ_correct, answ, 2, "Number Find Min-Max");
-    /*test_int_array_equal(answ_correct, answ, 2);*/
 }
 
 void run_data_structure_tests(){
@@ -102,14 +117,12 @@ void run_data_structure_tests(){
     init_ll(3); insert_front(9); insert_front(8); insert_front(7); insert_front(6);
     list_to_array(answ, 5);
     test_intarray_eq(list_correct, answ, 5, "Linked List");
-    /*test_int_array_equal(list_correct, answ, 5);*/
 
     int answ2[5];
     // Test circular linked list
     init_cl(); insert_cl(3); insert_cl(9); insert_cl(8); insert_cl(7); insert_cl(6);
     clist_to_array(answ2, 5);
     test_intarray_eq(list_correct, answ, 5, "Circular Linked List");
-    /*test_int_array_equal(list_correct, answ2, 5);*/
     /*traverse_list();*/
 
     int btree_answ[5] = {4,8,10,13,17};
@@ -122,7 +135,6 @@ void run_data_structure_tests(){
     btree_trav = traverse_btree();
     //traverse_btree_to_a(btree_trav);
     test_intarray_eq(btree_answ, btree_trav, 5, "Binary Tree");
-    /*test_int_array_equal(btree_answ, btree_trav, 5);*/
 
 }
 

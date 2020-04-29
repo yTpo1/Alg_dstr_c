@@ -5,7 +5,8 @@
 #define ASIZE 1000
 int count_test_run = 0, count_test_failed = 0;
 
-void print_int_array(int a[], int size){
+void print_int_array(int a[], int size)
+{
     for(int i=0; i<size; i++)
         printf("%d ", a[i]);
     printf("\n");
@@ -26,14 +27,17 @@ void print_int_array(int a[], int size){
     /*count_test_run++;*/
 /*}*/
 
-void test_intarray_eq(int *a, int *b, int size, char *title){
+void test_intarray_eq(int *a, int *b, int size, char *title)
+{
     int i = 0;
-    while(a[i]==b[i] && i<size)
+    while(a[i] == b[i] && i < size)
         i++;
+    i--;
     
-    if(a[i]!=b[i]){
+    if(a[i] != b[i]){
         printf("Test \"%s\": int array comparison. \033[0;31m Failed \033[0m \n", title);
-        //printf("\n a[%d]:%d != b[%d]:%d\n", i,a[i],i,b[i]);
+        printf("a[%d]:%d != b[%d]:%d\n", i, a[i], i, b[i]);
+	//printf("Original size: %d, traversed i: %d. a[i]!=b[i] %d!=%d\n", size, i, a[i], b[i]);
         printf("Array 1: ");
         print_int_array(a, size);
         printf("Array 2: ");

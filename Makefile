@@ -1,12 +1,29 @@
 CC=gcc
-CFLAGS=-I.
-DEPS = lib_algorithms/array_questions.h lib_algorithms/helper_func.h lib_algorithms/numbers.h lib_algorithms/str_questions.h lib_datastr/binary_tree.h lib_datastr/circ_link_list.h lib_datastr/linked_list.h lib_datastr/node.h lib_unittest/myunittest.h
-OBJ = main_test.o lib_algorithms/array_questions.o lib_algorithms/helper_func.o lib_algorithms/numbers.o lib_algorithms/str_questions.o lib_datastr/binary_tree.o lib_datastr/circ_link_list.o lib_datastr/linked_list.o lib_unittest/myunittest.o
+CFLAGS = -g -Wall
+MAIN = unit_tests.out
+#LIBS=-lm
 
+INCLUDES = -I/lib_algorithms/ -I/lib_datastr/ -I/lib_unittest/
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+SRCS = main_test.c $(ALGSRC) $(DSTRSRC) $(UNITSRC)
+#ALGSRC = lib_algorithms/array_questions.c  lib_algorithms/numbers.c lib_algorithms/helper_func.c lib_algorithms/str_questions.c
+ALGSRC = $(addprefix lib_algorithms/, array_questions.c  numbers.c helper_func.c str_questions.c)
+DSTRSRC = lib_datastr/binary_tree.c lib_datastr/linked_list.c lib_datastr/circ_link_list.c
+UNITSRC = lib_unittest/myunittest.c
 
-unit_tests: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
-	
+OBJS = $(SRCS:.c=.o)
+
+all: $(MAIN)
+	@echo Unit tests on algoriths and datastructures has been compiled
+
+$(MAIN): $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS)
+
+#.c.o:
+#	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+.PHONY: clean
+
+clean:
+	find . -type f -name '*.o' -exec rm {} +
+	rm -f $(MAIN)

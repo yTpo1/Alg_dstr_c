@@ -1,5 +1,7 @@
-#include "numbers.h"
 #include <stdio.h>
+#include <string.h>
+#include "numbers.h"
+
 static int gcd_classic(int u, int v)
 {
 	int t;
@@ -41,8 +43,27 @@ struct fraction* fr_low_terms(struct fraction *x)
 	return x;
 }
 
+// Conver Binary to Decimal
+void b_to_d(int nd, char *binary)
+{
+	char tmp[8];
+	int i = 0;
+	while(nd > 0){
+		tmp[i++] = (char)(nd % 2) + 48;
+		nd = nd / 2;
+	}
+	i--;
+	int j = 0;
+	while(i >= 0){
+		binary[j] = tmp[i];
+		j++;
+		i--;
+	}
+}
+
 // Find max and min numbers in array
-void find_max_min(int a[], int size, int answ[]){
+void find_max_min(int a[], int size, int answ[])
+{
 	//int min = -65535, max = 65535;
 	int min=a[0], max=a[0];
 	for(int i=0; i<size; i++){
@@ -53,4 +74,25 @@ void find_max_min(int a[], int size, int answ[]){
 	}
 	answ[0]=max;
 	answ[1]=min;
+}
+
+void seive_of_eratosthenes(int n, int a[])
+{
+	int t[n], i, j;
+	memset(t, 1, n*sizeof(int));	
+	t[0] = 0;
+	for(i = 2; i < n/2; i++){
+		for(j=2; j < n/i; j++)
+			t[i*j] = 0;
+	}
+	j = 0;
+	for(i=2; i < n; i++){
+		if(t[i])
+			a[j++] = i;
+	}
+}
+
+void prime_numers(int n, int a[])
+{
+	seive_of_eratosthenes(n, a);
 }

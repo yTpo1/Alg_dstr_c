@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS = -g -Wall
-MAIN = unit_tests.out
+MAIN = main_test.out
 #LIBS=-lm
 
 INCLUDES = -I/lib_algorithms/ -I/lib_datastr/ -I/lib_unittest/

@@ -1,3 +1,6 @@
+#ifndef UNIT_TEST_H_INCLUDED
+#define UNIT_TEST_H_INCLUDED
+
 #define ASIZE 1000
 
 void test_intequal(int a, int b, char *testname);
@@ -10,3 +13,5 @@ void print_int_array(int a[], int size);
 
 int my_strequal(char *s1, char *s2);
 double get_time();
+
+#endif

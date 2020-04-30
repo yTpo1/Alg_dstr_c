@@ -2,8 +2,10 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
-#define ASIZE 1000
-int count_test_run = 0, count_test_failed = 0;
+#include "myunittest.h"
+
+int count_test_run = 0;
+int count_test_failed = 0;
 
 void print_int_array(int a[], int size)
 {
@@ -69,14 +71,14 @@ void test_strequal(char *s1, char *s2, char *testname){
     if(!my_strequal(s1, s2)){
         /*printf("Name: %s\n", testname);*/
         printf("Test \"%s\": String comparison. \033[0;31m Failed \033[0m \n", testname);
-        printf("%s != %s \n", s1, s2);
+        printf("%s != %s s1-size:%d s2-size:%d\n", s1, s2, my_strlen(s1), my_strlen(s2));
         count_test_failed++;
     }
     count_test_run++;
 }
 
 void test_intequal(int a, int b, char *testname){
-    if(a!=b){
+    if(a != b){
         printf("Test \"%s\": int comparison \033[0;31m Failed \033[0m \n", testname);
         printf("%d!=%d\n",a,b);
         count_test_failed++;

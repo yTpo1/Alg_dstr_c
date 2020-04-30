@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "lib_unittest/myunittest.h"
 #include "lib_algorithms/str_questions.h"
 #include "lib_algorithms/array_questions.h"
@@ -9,21 +10,66 @@
 
 #define SIZEMAX 1000
 
-void run_number_tests();
-
-void run_array_tests();
-void run_str_tests();
-void run_data_structure_tests();
 void reset_dummy_array(int *a);
 
-int main(int argc, char* argv[]){
-    run_array_tests();
-    run_str_tests();
-    run_data_structure_tests();
-    run_number_tests();
 
-    print_test_status();
-    return 0;
+void test_gcd()
+{
+	//int a1 = 0;
+	//a1 = gcd(270, 192);
+	//test_intequal(a1, 6, "gcd");
+	test_intequal(gcd(270, 192), 6, "gcd");
+	test_intequal(gcd(461952, 116298), 18, "gcd");
+}
+
+void test_find_max_min()
+{
+    int a[9] = {2,1,4,76,2,7,26,8,9};
+    int answ_correct[2] = {76, 1};
+    //answ_correct[0] = 76;
+    //answ_correct[1] = 1;
+    int answ[2];
+    find_max_min(a, 9, answ);
+    test_intarray_eq(answ_correct, answ, 2, "Number Find Min-Max");
+}
+
+void test_fraction_to_lowest_terms()
+{
+	struct fraction fr;
+	fr.numerator = 178468;
+	fr.denominator = 267702;
+	fr_low_terms(&fr);
+	test_intequal(fr.numerator, 2, "Fraction to lowest terms");
+	test_intequal(fr.denominator, 3, "Fraction to lowest terms");
+}
+
+void test_b_to_d()
+{
+	char s[8];
+	memset(s,'\0',8*sizeof(char));
+	b_to_d(10, s);
+	test_strequal(s,"1010", "Binary to decimal");
+
+	memset(s,'\0',8*sizeof(char));
+	b_to_d(31, s);
+	test_strequal(s,"11111", "Binary to decimal");
+}
+
+void test_prime_numbers()
+{
+	int a[200];
+	memset(a, 0, 200*sizeof(int));
+	prime_numers(1000, a);
+	test_intequal(a[10], 31, "Prime Numbers");
+}
+
+void run_number_tests()
+{
+	test_gcd();
+	test_find_max_min();
+	test_fraction_to_lowest_terms();
+	test_b_to_d();
+	test_prime_numbers();
 }
 
 void run_array_tests(){
@@ -84,42 +130,8 @@ void run_array_tests(){
     /*int min_heapity = {1,*/
 }
 
-void test_gcd()
+void run_data_structure_tests()
 {
-	//int a1 = 0;
-	//a1 = gcd(270, 192);
-	//test_intequal(a1, 6, "gcd");
-	test_intequal(gcd(270, 192), 6, "gcd");
-	test_intequal(gcd(461952, 116298), 18, "gcd");
-}
-
-void test_find_max_min()
-{
-    int a[9] = {2,1,4,76,2,7,26,8,9};
-    int answ_correct[2] = {76, 1};
-    //answ_correct[0] = 76;
-    //answ_correct[1] = 1;
-    int answ[2];
-    find_max_min(a, 9, answ);
-    test_intarray_eq(answ_correct, answ, 2, "Number Find Min-Max");
-}
-
-void test_fraction_to_lowest_terms()
-{
-	struct fraction fr;
-	fr.numerator = 178468;
-	fr.denominator = 267702;
-	fr_low_terms(&fr);
-	test_intequal(fr.numerator, 2, "Fraction to lowest terms");
-	test_intequal(fr.denominator, 3, "Fraction to lowest terms");
-}
-void run_number_tests()
-{
-	test_gcd();
-	test_find_max_min();
-	test_fraction_to_lowest_terms();
-}
-void run_data_structure_tests(){
     int answ[5];
     int list_correct[5] = {6,7,8,9,3};
     // Test linked list
@@ -186,4 +198,14 @@ void reset_dummy_array(int *a){
     int tmp[10] = {4,3,8,7,2,9,1,5,6,10};
     for(int i=0; i<10; i++)
         a[i] = tmp[i];
+}
+
+int main(int argc, char* argv[]){
+    run_array_tests();
+    run_str_tests();
+    run_data_structure_tests();
+    run_number_tests();
+
+    print_test_status();
+    return 0;
 }

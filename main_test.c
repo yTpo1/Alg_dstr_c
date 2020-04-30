@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "lib_unittest/myunittest.h"
 #include "lib_algorithms/str_questions.h"
 #include "lib_algorithms/array_questions.h"
@@ -9,8 +10,6 @@
 #define SIZEMAX 1000
 
 void run_number_tests();
-void test_find_max_min();
-void test_gcd();
 
 void run_array_tests();
 void run_str_tests();
@@ -85,18 +84,13 @@ void run_array_tests(){
     /*int min_heapity = {1,*/
 }
 
-void run_number_tests()
-{
-	test_gcd();
-	test_find_max_min();
-	//178486, 267702);
-}
-
 void test_gcd()
 {
-	int a1 = 0;
-	a1 = gcd(270, 192);
-	test_intequal(a1, 6, "gcd");
+	//int a1 = 0;
+	//a1 = gcd(270, 192);
+	//test_intequal(a1, 6, "gcd");
+	test_intequal(gcd(270, 192), 6, "gcd");
+	test_intequal(gcd(461952, 116298), 18, "gcd");
 }
 
 void test_find_max_min()
@@ -110,6 +104,21 @@ void test_find_max_min()
     test_intarray_eq(answ_correct, answ, 2, "Number Find Min-Max");
 }
 
+void test_fraction_to_lowest_terms()
+{
+	struct fraction fr;
+	fr.numerator = 178468;
+	fr.denominator = 267702;
+	fr_low_terms(&fr);
+	test_intequal(fr.numerator, 2, "Fraction to lowest terms");
+	test_intequal(fr.denominator, 3, "Fraction to lowest terms");
+}
+void run_number_tests()
+{
+	test_gcd();
+	test_find_max_min();
+	test_fraction_to_lowest_terms();
+}
 void run_data_structure_tests(){
     int answ[5];
     int list_correct[5] = {6,7,8,9,3};

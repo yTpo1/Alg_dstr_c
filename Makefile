@@ -1,4 +1,4 @@
-CC=gcc
+CC=clang
 CFLAGS = -g -Wall
 MAIN = main_test.out
 #LIBS=-lm
@@ -6,9 +6,8 @@ MAIN = main_test.out
 INCLUDES = -I/lib_algorithms/ -I/lib_datastr/ -I/lib_unittest/
 
 SRCS = main_test.c $(ALGSRC) $(DSTRSRC) $(UNITSRC)
-#ALGSRC = lib_algorithms/array_questions.c  lib_algorithms/numbers.c lib_algorithms/helper_func.c lib_algorithms/str_questions.c
 ALGSRC = $(addprefix lib_algorithms/, array_questions.c  numbers.c helper_func.c str_questions.c)
-DSTRSRC = lib_datastr/binary_tree.c lib_datastr/linked_list.c lib_datastr/circ_link_list.c
+DSTRSRC = $(addprefix Dstr/, binary_tree.c circ_link_list.c linked_list.c linked_list_w_trailer.c stack_array.c stack_ll.c)
 UNITSRC = lib_unittest/myunittest.c
 
 OBJS = $(SRCS:.c=.o)

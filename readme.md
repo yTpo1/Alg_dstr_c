@@ -55,23 +55,28 @@ Implemented:
 * reverse array
 
 ## Data Structures:
-* Stack (push, pop)
-* Linked List (init, insert, delete, traverse)
-* Circular Linked List (init, insert, traverse)
-* Binary Tree (init, insert, delete, traverse
+* Stack. Implemented: push, pop
+  - Evaluate arithmetic expressions. [src1](#b-alg-c-segw) - page 26
+* Linked List. Implemented: init, insert, search, delete, traverse. [src1](#b-alg-c-segw) - page 17 [src2](#alg-java-gtg) - page 122
+* Circular Linked List.  Implemented: init, insert, traverse
+  - Josephus problem. N people are standing in a circle and killing the M-th person around the circle. The problem is to find the last person to die. Or the order in which people are executed. I.E. if N=9,M=5 then order is: 5,1,7,4,3,6,9,2,8. [src1](#b-alg-c-segw) - page 21 [src2](https://en.wikipedia.org/wiki/Josephus_problem)  
+* Binary Tree. Implemented: init, insert, delete, traverse
 
-# todo:
+# Todo:
 * swap variables on memory, not array
 * redo Max Min
 * redo Stack
-* implement queue
 * recursion stuff
-* doubly linked list
-* graphs
+Data structures
+---
+* Queue
+* Doubly Linked List
+* Graphs
 
 Sources:
 1. <a name="b-kr"></a>[Book] The C Programming Language 2nd Edition by Brian Kernighan and Dennis Ritchie
 2. [Book] Wengrow Jay - A Common Sense Guide to Data Structures and Algorithms
 3. <a name="b-alg-c-segw"></a>[Book] Algorithms in C by Robert Sedgewik
-4. https://github.com/jamesroutley/write-a-hash-table
+4. <a name="alg-java-gtg"></a> [Book] "Data Structures and Algorithms in Java" by Goodrich M., Tamassia R., Goldwasser M.
+5. https://github.com/jamesroutley/write-a-hash-table
 

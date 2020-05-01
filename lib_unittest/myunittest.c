@@ -34,7 +34,8 @@ void test_intarray_eq(int *a, int *b, int size, char *title)
     int i = 0;
     while(a[i] == b[i] && i < size)
         i++;
-    i--;
+    if(i != 0)
+	    i--;
     
     if(a[i] != b[i]){
         printf("Test \"%s\": int array comparison. \033[0;31m Failed \033[0m \n", title);

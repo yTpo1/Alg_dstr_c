@@ -4,14 +4,17 @@
 #include "lib_algorithms/str_questions.h"
 #include "lib_algorithms/array_questions.h"
 #include "lib_algorithms/numbers.h"
-#include "lib_datastr/linked_list.h"
-#include "lib_datastr/circ_link_list.h"
-#include "lib_datastr/binary_tree.h"
+#include "Dstr/linked_list.h"
+#include "Dstr/node.h"
+#include "Dstr/linked_list_w_trailer.h"
+#include "Dstr/stack_array.h"
+#include "Dstr/stack_ll.h"
+#include "Dstr/circ_link_list.h"
+#include "Dstr/binary_tree.h"
 
 #define SIZEMAX 1000
 
 void reset_dummy_array(int *a);
-
 
 void test_gcd()
 {
@@ -130,33 +133,129 @@ void run_array_tests(){
     /*int min_heapity = {1,*/
 }
 
+void test_linked_list()
+{
+	int answ[4];
+	int expected[4] = {28,9,14,31};
+	struct node *head;
+	head = ll_init();
+
+	ll_insert_front(head, 3);
+	ll_insert_front(head, 9);
+	ll_insert_end(head, 14);
+
+	test_intequal(ll_search(head, 9), 1, "Linked list");
+	test_intequal(ll_delete(head, 3), 3, "linked list");
+
+	ll_insert_front(head, 28);
+	ll_insert_end(head, 31);
+
+	ll_to_a(head, answ, 4);
+	test_intarray_eq(expected, answ, 4, "linked list");
+}
+
+void test_linked_list_w_trailer()
+{
+	int answ[5];
+	int list_correct[5] = {6,7,8,9,3};
+	int l_after_del[5] = {6,7,9,3,0};
+
+	llwt_init(); 
+	llwt_insert_front(3); 
+	llwt_insert_front(9); 
+
+	test_intequal(llwt_getfirstv(), 9, "Linked List gethead");
+
+	llwt_insert_front(8); 
+	llwt_insert_front(7); 
+	
+	// test search
+	test_intequal(llwt_search(9), 2, "Linked list search index");
+	test_intequal(llwt_search(7), 0, "Linked list search index");
+	test_intequal(llwt_search(50), -1, "Linked list search index");
+
+	llwt_insert_front(6);
+	llwt_to_a(answ, 5);
+	test_intarray_eq(list_correct, answ, 5, "Linked List");
+
+	// Test deletion of a node
+	memset(answ, 0, 5*sizeof(int));
+	test_intequal(llwt_delete(8), 8, "Linked list. Delete node success");
+	llwt_to_a(answ, 5);
+	test_intarray_eq(l_after_del, answ, 5, "Linked list");
+
+	test_intequal(llwt_delete(21), -1, "Linked list. Delete node fail");
+
+	// Test inserion at the end
+	llwt_insert_end(44);
+	l_after_del[4] = 44;
+	llwt_to_a(answ, 5);
+	test_intarray_eq(l_after_del, answ, 5, "Linked list");
+}
+
+void test_stack_array()
+{
+	test_intequal(sa_push(6), 0, "Stack push");
+	test_intequal(sa_pop(), 6, "Stack pop");
+
+	test_intequal(sa_push(2), 0, "Stack push");
+	test_intequal(sa_push(51), 1, "Stack push");
+	test_intequal(sa_push(7), 2, "Stack push");
+	test_intequal(sa_pop(), 7, "Stack pop");
+	
+	test_intequal(sa_push(18), 2, "Stack push");
+	test_intequal(sa_pop(), 18, "Stack pop");
+	test_intequal(sa_pop(), 51, "Stack pop");
+	test_intequal(sa_pop(), 2, "Stack pop");
+}
+
+void test_stack_ll()
+{
+	struct node *head;
+	head = sll_init();
+
+	sll_push(head, 6);
+	test_intequal(sll_pop(head), 6, "Stack pop");
+
+	sll_push(head, 2);
+	sll_push(head, 51);
+	sll_push(head, 7);
+	test_intequal(sll_pop(head), 7, "Stack pop");
+	
+	sll_push(head, 18);
+	test_intequal(sll_pop(head), 18, "Stack pop");
+	test_intequal(sll_pop(head), 51, "Stack pop");
+	test_intequal(sll_pop(head), 2, "Stack pop");
+}
+
 void run_data_structure_tests()
 {
-    int answ[5];
-    int list_correct[5] = {6,7,8,9,3};
-    // Test linked list
-    init_ll(3); insert_front(9); insert_front(8); insert_front(7); insert_front(6);
-    list_to_array(answ, 5);
-    test_intarray_eq(list_correct, answ, 5, "Linked List");
+	test_linked_list();
+	test_linked_list_w_trailer();
 
-    int answ2[5];
-    // Test circular linked list
-    init_cl(); insert_cl(3); insert_cl(9); insert_cl(8); insert_cl(7); insert_cl(6);
-    clist_to_array(answ2, 5);
-    test_intarray_eq(list_correct, answ, 5, "Circular Linked List");
-    /*traverse_list();*/
+	int answ2[5];
+	int list_correct[5] = {6,7,8,9,3};
 
-    int btree_answ[5] = {4,8,10,13,17};
-    int *btree_trav;
-    init_btree(10);
-    insert_btree(8);
-    insert_btree(17);
-    insert_btree(4);
-    insert_btree(13);
-    btree_trav = traverse_btree();
-    //traverse_btree_to_a(btree_trav);
-    test_intarray_eq(btree_answ, btree_trav, 5, "Binary Tree");
+	// Test circular linked list
+	init_cl(); insert_cl(3); insert_cl(9); insert_cl(8); insert_cl(7); insert_cl(6);
+	clist_to_array(answ2, 5);
+	test_intarray_eq(list_correct, answ2, 5, "Circular Linked List");
 
+	test_stack_array();
+	test_stack_ll();
+
+	/*
+	int btree_answ[5] = {4,8,10,13,17};
+	int *btree_trav;
+	init_btree(10);
+	insert_btree(8);
+	insert_btree(17);
+	insert_btree(4);
+	insert_btree(13);
+	btree_trav = traverse_btree();
+	//traverse_btree_to_a(btree_trav);
+	test_intarray_eq(btree_answ, btree_trav, 5, "Binary Tree");
+	*/
 }
 
 void run_str_tests(){

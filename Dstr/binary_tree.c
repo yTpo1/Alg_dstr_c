@@ -45,7 +45,7 @@ void insert_btree(int key){
 struct tree_node *delete(int key, struct tree_node *node){
     if(node == NULL)
         return NULL;
-    else if(node->value = key){
+    else if(node->value == key){
         if(node->left == NULL && node->right == NULL){
             // remove reference to current node from parents nodes
             free(node);

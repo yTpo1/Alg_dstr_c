@@ -47,6 +47,7 @@ Implemented:
 * Straight selection sort
 
 ## String:
+* String with Reverse Polish notation/postfix to stack
 * remove char from string
 * check anagram
 * find duplicate characters
@@ -56,7 +57,7 @@ Implemented:
 
 ## Data Structures:
 * Stack. Implemented: push, pop
-  - Evaluate arithmetic expressions. [src1](#b-alg-c-segw) - page 26
+  - Evaluate arithmetic expressions from reverse Polish notation/postfix. [src1](#b-alg-c-segw) - page 26
 * Linked List. Implemented: init, insert, search, delete, traverse. [src1](#b-alg-c-segw) - page 17 [src2](#alg-java-gtg) - page 122
 * Circular Linked List.  Implemented: init, insert, traverse
   - Josephus problem. N people are standing in a circle and killing the M-th person around the circle. The problem is to find the last person to die. Or the order in which people are executed. I.E. if N=9,M=5 then order is: 5,1,7,4,3,6,9,2,8. [src1](#b-alg-c-segw) - page 21 [src2](https://en.wikipedia.org/wiki/Josephus_problem)  

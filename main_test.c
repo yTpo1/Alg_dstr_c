@@ -6,7 +6,6 @@
 #include "lib_algorithms/numbers.h"
 #include "Dstr/linked_list.h"
 #include "Dstr/node.h"
-#include "Dstr/linked_list_w_trailer.h"
 #include "Dstr/stack_array.h"
 #include "Dstr/stack_ll.h"
 #include "Dstr/circ_link_list.h"
@@ -16,11 +15,23 @@
 
 void reset_dummy_array(int *a);
 
+void test_posfix_equation()
+{
+	struct node *head;
+	char s[9] = "2 3 5 + *";
+	head = sll_init();
+	test_intequal(solve_equation_posfix(head, s), 16, "posfix equation using stack");
+	sll_free(head);
+}
+
+void test_char_to_int()
+{
+	test_intequal(char_to_int('3'), 3, "char to int");
+	test_intequal(char_to_int('9'), 9, "char to int");
+}
+
 void test_gcd()
 {
-	//int a1 = 0;
-	//a1 = gcd(270, 192);
-	//test_intequal(a1, 6, "gcd");
 	test_intequal(gcd(270, 192), 6, "gcd");
 	test_intequal(gcd(461952, 116298), 18, "gcd");
 }
@@ -66,72 +77,6 @@ void test_prime_numbers()
 	test_intequal(a[10], 31, "Prime Numbers");
 }
 
-void run_number_tests()
-{
-	test_gcd();
-	test_find_max_min();
-	test_fraction_to_lowest_terms();
-	test_b_to_d();
-	test_prime_numbers();
-}
-
-void run_array_tests(){
-    int actual_size = 10;
-    int unsorted_a[SIZEMAX];
-    int sorted_answer[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
-
-    char s1[SIZEMAX] = "hey boss";
-    char s2[SIZEMAX] = " behossy";
-    insertion_sort_char(s1, 9);
-    test_strequal(s2, s1, "insertion_sort_char");
-
-    test_intequal(1, binary_search(sorted_answer, 2, 0, 9), "binary_seach");
-    test_intequal(1, binary_search(sorted_answer, 10, 0, 10), "binary_seach");
-    test_intequal(0, binary_search(sorted_answer, 15, 0, 10), "binary_seach");
-   
-    // Unittest Insertion Sort
-    reset_dummy_array(unsorted_a);
-    insertion_sort(unsorted_a, actual_size);
-    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Insertion Sort");
-    /*t_iarray_eq(unsorted_a, sorted_answer, "Insertion Sort");*/
-
-    // Unittest straight selection
-    reset_dummy_array(unsorted_a);
-    straignt_selection(unsorted_a, actual_size);
-    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Straight Selection");
-
-    // Unittest Quick Sort
-    reset_dummy_array(unsorted_a);
-    quick_sort(unsorted_a, 0, 9);
-    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Quick Sort");
-
-    // Unittest Merge Sort 
-    reset_dummy_array(unsorted_a);
-    merge_sort(unsorted_a, 0, 9);
-    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Merge Sort");
-
-
-    // Unittest bubble_sort
-    reset_dummy_array(unsorted_a);
-    bubble_sort(unsorted_a, actual_size);
-    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Bubble sort");
-
-    // Unittest Heap sort
-    //reset_dummy_array(unsorted_a);
-    //heap_sort(unsorted_a, actual_size);
-    //test_int_array_equal(unsorted_a, sorted_answer, actual_size);
-    
-    // Unittest Find Median
-    // !Infinite loop
-    //reset_dummy_array(unsorted_a);
-    //int m = get_median(unsorted_a, actual_size);
-    //test_intequal(5, m, "Find Median"); 
-
-    // Unittest min heapify
-    /*reset_dummy_array(unsorted_a);*/
-    /*min_heapify(unsorted_a, actual_size);*/
-    /*int min_heapity = {1,*/
-}
 
 void test_linked_list()
 {
@@ -152,61 +97,27 @@ void test_linked_list()
 
 	ll_to_a(head, answ, 4);
 	test_intarray_eq(expected, answ, 4, "linked list");
-}
 
-void test_linked_list_w_trailer()
-{
-	int answ[5];
-	int list_correct[5] = {6,7,8,9,3};
-	int l_after_del[5] = {6,7,9,3,0};
-
-	llwt_init(); 
-	llwt_insert_front(3); 
-	llwt_insert_front(9); 
-
-	test_intequal(llwt_getfirstv(), 9, "Linked List gethead");
-
-	llwt_insert_front(8); 
-	llwt_insert_front(7); 
-	
-	// test search
-	test_intequal(llwt_search(9), 2, "Linked list search index");
-	test_intequal(llwt_search(7), 0, "Linked list search index");
-	test_intequal(llwt_search(50), -1, "Linked list search index");
-
-	llwt_insert_front(6);
-	llwt_to_a(answ, 5);
-	test_intarray_eq(list_correct, answ, 5, "Linked List");
-
-	// Test deletion of a node
-	memset(answ, 0, 5*sizeof(int));
-	test_intequal(llwt_delete(8), 8, "Linked list. Delete node success");
-	llwt_to_a(answ, 5);
-	test_intarray_eq(l_after_del, answ, 5, "Linked list");
-
-	test_intequal(llwt_delete(21), -1, "Linked list. Delete node fail");
-
-	// Test inserion at the end
-	llwt_insert_end(44);
-	l_after_del[4] = 44;
-	llwt_to_a(answ, 5);
-	test_intarray_eq(l_after_del, answ, 5, "Linked list");
+	ll_free(head);
 }
 
 void test_stack_array()
 {
-	test_intequal(sa_push(6), 0, "Stack push");
-	test_intequal(sa_pop(), 6, "Stack pop");
+	struct sa_stack *stack;
+	stack = sa_init();
+	test_intequal(sa_push(stack, 6), 0, "Stack push");
+	test_intequal(sa_pop(stack), 6, "Stack pop");
 
-	test_intequal(sa_push(2), 0, "Stack push");
-	test_intequal(sa_push(51), 1, "Stack push");
-	test_intequal(sa_push(7), 2, "Stack push");
-	test_intequal(sa_pop(), 7, "Stack pop");
+	test_intequal(sa_push(stack, 2), 0, "Stack push");
+	test_intequal(sa_push(stack, 51), 1, "Stack push");
+	test_intequal(sa_push(stack, 7), 2, "Stack push");
+	test_intequal(sa_pop(stack), 7, "Stack pop");
 	
-	test_intequal(sa_push(18), 2, "Stack push");
-	test_intequal(sa_pop(), 18, "Stack pop");
-	test_intequal(sa_pop(), 51, "Stack pop");
-	test_intequal(sa_pop(), 2, "Stack pop");
+	test_intequal(sa_push(stack, 18), 2, "Stack push");
+	test_intequal(sa_pop(stack), 18, "Stack pop");
+	test_intequal(sa_pop(stack), 51, "Stack pop");
+	test_intequal(sa_pop(stack), 2, "Stack pop");
+	sa_free(stack);
 }
 
 void test_stack_ll()
@@ -226,25 +137,29 @@ void test_stack_ll()
 	test_intequal(sll_pop(head), 18, "Stack pop");
 	test_intequal(sll_pop(head), 51, "Stack pop");
 	test_intequal(sll_pop(head), 2, "Stack pop");
+	sll_free(head);
 }
 
-void run_data_structure_tests()
+void test_circular_linked_list()
 {
-	test_linked_list();
-	test_linked_list_w_trailer();
-
+	struct node *head;
 	int answ2[5];
 	int list_correct[5] = {6,7,8,9,3};
 
-	// Test circular linked list
-	init_cl(); insert_cl(3); insert_cl(9); insert_cl(8); insert_cl(7); insert_cl(6);
-	clist_to_array(answ2, 5);
+	head = init_cl(); 
+	insert_cl(head, 3); 
+	insert_cl(head, 9); 
+	insert_cl(head, 8); 
+	insert_cl(head, 7); 
+	insert_cl(head, 6);
+	clist_to_array(head, answ2, 5);
 	test_intarray_eq(list_correct, answ2, 5, "Circular Linked List");
 
-	test_stack_array();
-	test_stack_ll();
+	cll_free(head);
+}
 
-	/*
+void test_btree()
+{
 	int btree_answ[5] = {4,8,10,13,17};
 	int *btree_trav;
 	init_btree(10);
@@ -255,7 +170,6 @@ void run_data_structure_tests()
 	btree_trav = traverse_btree();
 	//traverse_btree_to_a(btree_trav);
 	test_intarray_eq(btree_answ, btree_trav, 5, "Binary Tree");
-	*/
 }
 
 void run_str_tests(){
@@ -299,6 +213,81 @@ void reset_dummy_array(int *a){
         a[i] = tmp[i];
 }
 
+void run_array_tests(){
+    int actual_size = 10;
+    int unsorted_a[SIZEMAX];
+    int sorted_answer[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
+
+    char s1[SIZEMAX] = "hey boss";
+    char s2[SIZEMAX] = " behossy";
+    insertion_sort_char(s1, 9);
+    test_strequal(s2, s1, "insertion_sort_char");
+
+    test_intequal(1, binary_search(sorted_answer, 2, 0, 9), "binary_seach");
+    test_intequal(1, binary_search(sorted_answer, 10, 0, 10), "binary_seach");
+    test_intequal(0, binary_search(sorted_answer, 15, 0, 10), "binary_seach");
+   
+    // Unittest Insertion Sort
+    reset_dummy_array(unsorted_a);
+    insertion_sort(unsorted_a, actual_size);
+    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Insertion Sort");
+    /*t_iarray_eq(unsorted_a, sorted_answer, "Insertion Sort");*/
+
+    // Unittest straight selection
+    reset_dummy_array(unsorted_a);
+    straignt_selection(unsorted_a, actual_size);
+    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Straight Selection");
+
+    // Unittest Quick Sort
+    reset_dummy_array(unsorted_a);
+    quick_sort(unsorted_a, 0, 9);
+    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Quick Sort");
+
+    // Unittest Merge Sort 
+    reset_dummy_array(unsorted_a);
+    merge_sort(unsorted_a, 0, 9);
+    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Merge Sort");
+
+    // Unittest bubble_sort
+    reset_dummy_array(unsorted_a);
+    bubble_sort(unsorted_a, actual_size);
+    test_intarray_eq(unsorted_a, sorted_answer, actual_size, "Bubble sort");
+
+    // Unittest Heap sort
+    //reset_dummy_array(unsorted_a);
+    //heap_sort(unsorted_a, actual_size);
+    //test_int_array_equal(unsorted_a, sorted_answer, actual_size);
+    
+    // Unittest Find Median
+    // !Infinite loop
+    //reset_dummy_array(unsorted_a);
+    //int m = get_median(unsorted_a, actual_size);
+    //test_intequal(5, m, "Find Median"); 
+
+    // Unittest min heapify
+    /*reset_dummy_array(unsorted_a);*/
+    /*min_heapify(unsorted_a, actual_size);*/
+    /*int min_heapity = {1,*/
+}
+
+void run_data_structure_tests()
+{
+	test_linked_list();
+	test_circular_linked_list();
+	test_stack_array();
+	test_stack_ll();
+	test_btree();
+}
+void run_number_tests()
+{
+	test_gcd();
+	test_find_max_min();
+	test_fraction_to_lowest_terms();
+	test_b_to_d();
+	test_prime_numbers();
+	test_char_to_int();
+	test_posfix_equation();
+}
 int main(int argc, char* argv[]){
     run_array_tests();
     run_str_tests();

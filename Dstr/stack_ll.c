@@ -17,3 +17,8 @@ int sll_pop(struct node *head)
 {
 	return ll_delete(head, head->next->key);
 }
+
+void sll_free(struct node *head)
+{
+	ll_free(head);
+}

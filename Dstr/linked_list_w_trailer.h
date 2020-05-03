@@ -1,6 +1,7 @@
 #include "node.h"
 
 void llwt_init(void);
+void llwt_free(void);
 void llwt_insert_front(int v);
 void llwt_insert_end(int v);
 int llwt_search(int v);

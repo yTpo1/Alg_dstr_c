@@ -12,6 +12,20 @@ void llwt_init(void)
     trailer->next = trailer;
 }
 
+void llwt_free(void)
+{
+	struct node *tx;
+	struct node *ty;
+	tx = head->next;
+	ty = head;
+	while(tx != trailer){
+		free(ty);
+		ty = tx;
+		tx = tx->next;
+	}
+	free(tx);
+}
+
 void llwt_insert_front(int v)
 {
 	struct node *new;
@@ -45,8 +59,8 @@ void llwt_insert_end(int v)
 	new = (struct node *) malloc (sizeof *new);
 	new->key = v;
 
-	new->next = trailer;
 	prec = llwt_get_preceding_node(trailer);
+	new->next = trailer;
 	prec->next = new;
 }
 	

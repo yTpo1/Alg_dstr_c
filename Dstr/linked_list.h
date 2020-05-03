@@ -1,6 +1,7 @@
 #include "node.h"
 
-struct node *ll_init();
+struct node *ll_init(void);
+void ll_free(struct node *head);
 void ll_insert_front(struct node *head, int v);
 void ll_insert_end(struct node *head, int v);
 int ll_search(struct node *head, int v);

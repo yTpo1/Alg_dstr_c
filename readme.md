@@ -1,3 +1,10 @@
+# todo:
+* free the used memory
+* c unit testing with assert
+* c unit testing make cmake
+* https://github.com/bats-core/bats-core
+* https://cmocka.org/
+
 # Algorithms and Data Structures in C
 ## Number:
 * Greatest Common Divisor "gcd(" 

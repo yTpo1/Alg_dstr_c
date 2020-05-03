@@ -1,24 +1,39 @@
-static int buffer[100];
-static int index_buff = 0;
+#include <stdlib.h>
+#include "stack_array.h"
+//static int buffer[100];
+//static int index_buff = 0;
 
-//void sa_init(){}
+struct sa_stack *sa_init()
+{
+	struct sa_stack *new;
+	new = (struct sa_stack *) malloc (sizeof *new);
+	new->buffer = (int*)malloc(100*sizeof(int));
+	new->index_buff = 0;
+	return new;
+}
+
+void sa_free(struct sa_stack *st)
+{
+	free(st->buffer);
+	free(st);
+}
 
 // index:success, -1: failure
-int sa_push(int n)
+int sa_push(struct sa_stack *st, int n)
 {
-	if(index_buff < 100){
-		buffer[index_buff] = n;
-		return index_buff++;
+	if(st->index_buff < 100){
+		st->buffer[st->index_buff] = n;
+		return st->index_buff++;
 	}
 	return -1;
 }
 
 // v:success, 0: failure
-int sa_pop()
+int sa_pop(struct sa_stack *st)
 {
 	int v = 0;	
-	if(index_buff > 0){
-		v = buffer[--index_buff];
+	if(st->index_buff > 0){
+		v = st->buffer[--(st->index_buff)];
 		return v;
 	}
 	return 0;

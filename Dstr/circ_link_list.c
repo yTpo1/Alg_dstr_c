@@ -1,24 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "node.h"
+#include "circ_link_list.h"
 
-struct node *first;
 /* first element will always be 0 */
-void init_cl(){
-    first = (struct node *) malloc (sizeof *first);
-    first->key = 0;
-    first->next = first;
+struct node *init_cl(void)
+{
+	struct node *first;
+	first = (struct node *) malloc (sizeof *first);
+	first->key = 0;
+	first->next = first;
+	return first;
 }
 
-void insert_cl(int val){
+void cll_free(struct node* head)
+{
+	struct node *tx;
+	struct node *ty;
+	tx = head->next;
+	while(tx != head){
+		ty = tx;
+		free(ty);
+		tx = tx->next;
+	}
+	free(head);
+}
+
+void insert_cl(struct node *head, int val)
+{
     struct node *new;
     new = (struct node *) malloc (sizeof *new);
-    new->next = first->next;
-    first->next = new;
+    new->next = head->next;
+    head->next = new;
     new->key = val;
 }
 
-void traverse_list(){
+void traverse_list(struct node *first){
     struct node *tmp;
     tmp = first;
     printf("%d, ", tmp->key);
@@ -29,7 +45,7 @@ void traverse_list(){
     }
 }
 
-void clist_to_array(int *a, int size){
+void clist_to_array(struct node *first, int *a, int size){
     struct node *tmp;
     tmp = first->next;
     int i = 0;

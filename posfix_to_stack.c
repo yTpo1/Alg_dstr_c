@@ -1,20 +1,21 @@
 #include "Dstr/stack_ll.h"
 
-int solve_equasion_posfix(struct node *head, char *s)
+int char_to_int(char c)
 {
-	int x;
+	return (int) c - 48;
+}
+
+int solve_equation_posfix(struct node *head, char *s)
+{
 	char *stmp;
 	for(int i = 0; s[i] != '\0'; i++){
-		x = 0;
 		if(s[i] == '+')
-			x = sll_pop(head) + sll_pop(head);
+			sll_push(head, sll_pop(head) + sll_pop(head));
 		if(s[i] == '*')
-			x = sll_pop(head) * sll_pop(head);
+			sll_push(head, sll_pop(head) * sll_pop(head));
 		while(s[i] >= '0' && s[i] <= '9'){
-
+			sll_push(head, s[i]);
 		}
-
 	}
-	return x;
-
+	return sll_pop(head);
 }

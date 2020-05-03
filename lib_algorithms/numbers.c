@@ -34,6 +34,7 @@ int gcd(int u, int v)
 {
 	return gcd_modulo(u, v);
 }
+
 // Reduce a given fraction to its lowest terms
 struct fraction* fr_low_terms(struct fraction *x)
 {
@@ -95,4 +96,24 @@ void seive_of_eratosthenes(int n, int a[])
 void prime_numers(int n, int a[])
 {
 	seive_of_eratosthenes(n, a);
+}
+
+int char_to_int(char c)
+{
+	return (int) c - 48;
+}
+
+int solve_equation_posfix(struct node *head, char *s)
+{
+	for(int i = 0; s[i] != '\0'; i++){
+		if(s[i] == '+')
+			sll_push(head, sll_pop(head) + sll_pop(head));
+		if(s[i] == '*')
+			sll_push(head, sll_pop(head) * sll_pop(head));
+		while(s[i] >= '0' && s[i] <= '9'){
+			sll_push(head, char_to_int(s[i]));
+			i++;
+		}
+	}
+	return sll_pop(head);
 }

@@ -97,7 +97,8 @@ void traverse(struct tree_node *node){
     }
 }
 
-int *traverse_btree(){
+int *traverse_btree(void)
+{
     tr_index = 0;
     traverse(root);
     int *ptrav = traversal;

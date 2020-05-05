@@ -7,7 +7,8 @@ INCLUDES = -I/lib_algorithms/ -I/lib_datastr/ -I/lib_unittest/
 
 SRCS = main_test.c $(ALGSRC) $(DSTRSRC) $(UNITSRC)
 ALGSRC = $(addprefix lib_algorithms/, array_questions.c  numbers.c helper_func.c str_questions.c)
-DSTRSRC = $(addprefix Dstr/, binary_tree.c circ_link_list.c linked_list.c stack_array.c stack_ll.c)
+DSTRSRC = $(addprefix Dstr/, binary_tree.c circ_link_list.c linked_list.c \
+	  stack_array.c stack_ll.c queue.c)
 UNITSRC = lib_unittest/myunittest.c
 
 OBJS = $(SRCS:.c=.o)

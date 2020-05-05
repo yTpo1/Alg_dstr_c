@@ -121,11 +121,11 @@ int ll_delete(struct node *head, int n)
 // Convert link list to array
 void ll_to_a(struct node *head, int *a, int size)
 {
-    struct node *tmp;
-    tmp = head->next;
-    int i = 0;
-    while (tmp->next != NULL && i < size) {
-        a[i++] = tmp->key;
-        tmp = tmp->next;
-    }
+	struct node *tmp;
+	tmp = head->next;
+	int i = 0;
+	while (tmp != NULL && i < size) {
+		a[i++] = tmp->key;
+		tmp = tmp->next;
+	}
 }

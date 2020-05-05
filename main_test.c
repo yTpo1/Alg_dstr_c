@@ -8,6 +8,7 @@
 #include "Dstr/node.h"
 #include "Dstr/stack_array.h"
 #include "Dstr/stack_ll.h"
+#include "Dstr/queue.h"
 #include "Dstr/circ_link_list.h"
 #include "Dstr/binary_tree.h"
 
@@ -105,6 +106,11 @@ void test_stack_array()
 {
 	struct sa_stack *stack;
 	stack = sa_init();
+
+	test_intequal(sa_isempty(stack), 1, "stack isempty");
+	test_intequal(sa_size(stack), 0, "stask size");
+	test_intequal(sa_top(stack), -1, "stask top");
+
 	test_intequal(sa_push(stack, 6), 0, "Stack push");
 	test_intequal(sa_pop(stack), 6, "Stack pop");
 
@@ -112,11 +118,20 @@ void test_stack_array()
 	test_intequal(sa_push(stack, 51), 1, "Stack push");
 	test_intequal(sa_push(stack, 7), 2, "Stack push");
 	test_intequal(sa_pop(stack), 7, "Stack pop");
+
+	test_intequal(sa_isempty(stack), 0, "stack isempty");
+	test_intequal(sa_size(stack), 2,"stack size");
+	test_intequal(sa_top(stack), 51, "stack top");
 	
 	test_intequal(sa_push(stack, 18), 2, "Stack push");
 	test_intequal(sa_pop(stack), 18, "Stack pop");
 	test_intequal(sa_pop(stack), 51, "Stack pop");
 	test_intequal(sa_pop(stack), 2, "Stack pop");
+
+	test_intequal(sa_isempty(stack), 1, "stack isempty");
+	test_intequal(sa_size(stack), 0, "stack size");
+	test_intequal(sa_top(stack), -1, "stask top");
+
 	sa_free(stack);
 }
 
@@ -158,18 +173,86 @@ void test_circular_linked_list()
 	cll_free(head);
 }
 
+void test_queue()
+{
+	struct queue *q;
+	q = q_init();
+	test_intequal(q_size(q), 0, "q size");
+	test_intequal(q_isempty(q), 1, "q isempty");
+	q_enqueue(q, 6);
+	test_intequal(q_size(q), 1, "q size");
+	test_intequal(q_first(q), 6, "q first");
+	test_intequal(q_isempty(q), 0, "q isempty");
+
+	q_enqueue(q, 3);
+	test_intequal(q_first(q), 3, "q first");
+	test_intequal(q_dequeue(q), 6, "q dequeue");
+	test_intequal(q_size(q), 1, "q size");
+	q_enqueue(q, 77);
+	q_enqueue(q, 81);
+	
+	for(int i = 0; i < QUEUESIZE * 2; i++){
+		q_enqueue(q, i);
+		q_dequeue(q);
+	}
+	test_intequal(q_isempty(q), 0, "q isempty");
+	test_intequal(q_size(q), 3, "q size");
+	test_intequal(q_first(q), ((QUEUESIZE * 2) - 1), "q first");
+	test_intequal(q_dequeue(q), ((QUEUESIZE * 2) - 3), "q dequeue");
+
+	q_free(q);
+}
+
 void test_btree()
 {
-	int btree_answ[5] = {4,8,10,13,17};
-	int *btree_trav;
-	init_btree(10);
-	insert_btree(8);
-	insert_btree(17);
-	insert_btree(4);
-	insert_btree(13);
-	btree_trav = traverse_btree();
-	//traverse_btree_to_a(btree_trav);
-	test_intarray_eq(btree_answ, btree_trav, 5, "Binary Tree");
+	int bt_preotrav[5] = {10,8,4,17,13};
+	int bt_inotrav[5] = {4,8,10,13,17};
+	int bt_postotrav[5] = {4,8,13,17,10};
+	int bt_befdel[7] = {3,4,6,8,10,13,17};
+	int bt_del[6] = {3,4,8,13,17,10};
+	int a_size = 10;
+	int bt_trav[10];
+
+	struct tree_node *root;
+
+	root = bt_init(10);
+	test_intequal(bt_search(root, 10), 1, "bt insert-search");
+
+	bt_insert(root, 8);
+	test_intequal(bt_search(root, 8), 1, "bt insert-search");
+	test_intequal(bt_search(root, 73), 0, "bt insert-search");
+	bt_insert(root, 17);
+	bt_insert(root, 4);
+	bt_insert(root, 13);
+	test_intequal(bt_search(root, 4), 1, "bt insert-search");
+	test_intequal(bt_search(root, 13), 1, "bt insert-search");
+	test_intequal(bt_search(root, 73), 0, "bt insert-search");
+
+	bt_traverse(root, 1, bt_trav, a_size);
+	test_intarray_eq(bt_preotrav, bt_trav, 5, "Binary Tree - preorder");
+
+	bt_traverse(root, 2, bt_trav, a_size);
+	test_intarray_eq(bt_inotrav, bt_trav, 5, "Binary Tree - inorder");
+
+	bt_traverse(root, 3, bt_trav, a_size);
+	test_intarray_eq(bt_postotrav, bt_trav, 5, "Binary Tree - postorder");
+
+	bt_insert(root, 6);
+	bt_insert(root, 3);
+	bt_traverse(root, 2, bt_trav, a_size);
+	//for (int i = 0; i < 7; i++)
+	//	printf(" %d ", bt_trav[i]);
+	test_intarray_eq(bt_befdel, bt_trav, 7, "Binary Tree - 2 new elem");
+	//bt_delete_node(root, 6);
+
+	bt_traverse(root, 2, bt_trav, a_size);
+	test_intarray_eq(bt_del, bt_trav, 6, "Binary Tree - after delete");
+
+	//btree_trav = traverse_btree();
+	////traverse_btree_to_a(btree_trav);
+	//bt_free(root);
+	
+	bt_delete_tree(root);
 }
 
 void run_str_tests(){
@@ -276,6 +359,7 @@ void run_data_structure_tests()
 	test_circular_linked_list();
 	test_stack_array();
 	test_stack_ll();
+	test_queue();
 	test_btree();
 }
 void run_number_tests()

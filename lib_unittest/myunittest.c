@@ -29,25 +29,28 @@ void print_int_array(int a[], int size)
     /*count_test_run++;*/
 /*}*/
 
+// TODO: this function is absolute shit. fix it and then start using cmocka or
+// a normal unit test library. FUCK
 void test_intarray_eq(int *a, int *b, int size, char *title)
 {
-    int i = 0;
-    while(a[i] == b[i] && i < size)
-        i++;
-    if(i != 0)
-	    i--;
-    
-    if(a[i] != b[i]){
-        printf("Test \"%s\": int array comparison. \033[0;31m Failed \033[0m \n", title);
-        printf("a[%d]:%d != b[%d]:%d\n", i, a[i], i, b[i]);
-	//printf("Original size: %d, traversed i: %d. a[i]!=b[i] %d!=%d\n", size, i, a[i], b[i]);
-        printf("Array 1: ");
-        print_int_array(a, size);
-        printf("Array 2: ");
-        print_int_array(b, size);
-        count_test_failed++;
-    }
-    count_test_run++; 
+	int error = 0;
+	for (int i = 0; i < size; i++) {
+		if (a[i] != b[i]) {
+			error = 1;
+			break;
+		}
+	}
+	if (error){
+		printf("Test \"%s\": int array comparison. \033[0;31m Failed \033[0m \n", title);
+		//printf("a[%d]:%d != b[%d]:%d\n", i, a[i], i, b[i]);
+		//printf("Original size: %d, traversed i: %d. a[i]!=b[i] %d!=%d\n", size, i, a[i], b[i]);
+		printf("Array 1: ");
+		print_int_array(a, size);
+		printf("Array 2: ");
+		print_int_array(b, size);
+		count_test_failed++;
+	}
+	count_test_run++; 
 }
 
 /* strlen: return lenght of string s */

@@ -3,5 +3,6 @@
 *.swap
 *.swp
 *.gch
+*.gdbinit
 tags
 unit_tests

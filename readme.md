@@ -9,21 +9,8 @@
 Note: learning for different books and online resources made me realize that allot of these learning reasources either don't provide complete and correct implementation. So best choice is to be reading through a couple of them at the same time.
 
 ## Number:
-* Greatest Common Divisor "gcd(" 
-  - Solution 1. "Euclid' algorithm Classsic. Origin 300BC": if u > v, then gcd of u and v, is same as gcd of v and u-v.  
-If using classic: count of spets for _ _ is 11, and for _ _ is 58.  
-  - Modulo: gcd of u and v is same as gcd of v and u % v.  
-If using modulo: count of steps for _ _ is 4. And for _ _ is 7.  
-[src](#b-alg-c-segw)  
-* Reduce a given fraction to its lowest terms "fr_low_terms("
-Is based on gcd.
-* Convert a decimal to binary "d_to_b"
-  - Algorithm:
-    1. Store the remainder when the number is divided by 2 in an array.
-    2. Divide the number by 2
-    3. Repeat the above two steps until the number is greater than zero.
-    4. Print the array in reverse order now.
-    [src](https://www.geeksforgeeks.org/program-decimal-binary-conversion/)
+[numbers](Docs/numbers_math.md)
+
 
 ## Array:
 Array also correspond directly to vectors, the mathematical term for indexed list of objects. 
@@ -65,6 +52,15 @@ Implemented:
 |Binary Tree|O(N)|O(log N)|O(log N)|O(log N)|
 |Graph|-|O(1)|-|-|
 
+Operations:
+* Initialize the data structure
+* Search for a record (or records) having a given key.
+* Insert a new record
+* Delete a specified record
+* Join two dictionaries to make a large one
+* Sort the dictionary; output all records in sorted order
+
+Implemented:
 * [Linked List](Docs/linked_list.md) 
 * [Stack](Docs/stack.md) 
 * [Queue](Docs/queue.md)

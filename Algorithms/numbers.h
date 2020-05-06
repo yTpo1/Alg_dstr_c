@@ -12,3 +12,4 @@ void b_to_d(int nd, char *binary);
 void prime_numers(int n, int a[]);
 int char_to_int(char c);
 int solve_equation_posfix(struct node *head, char *s);
+int fibonacci(int lim);

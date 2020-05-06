@@ -2,11 +2,26 @@
 #include <string.h>
 #include "numbers.h"
 
+// Time: O(2^n). Space: O(n)
+int fibonacci_r(int lim)
+{
+	if (lim <= 1)
+		return 1;
+	return fibonacci(lim - 1) + fibonacci(lim - 2);
+}
+
+// Time: O(n). Space: O(1)
+int fibonacci_i(int lim)
+{
+}
+
+// Euclidean algorithm by subtraction
+// Time: O(n)
 static int gcd_classic(int u, int v)
 {
 	int t;
-	while(u > 0){
-		if(u < v){
+	while (u > 0) {
+		if (u < v) {
 			t = u;
 			u = v;
 			v = t;
@@ -19,8 +34,8 @@ static int gcd_classic(int u, int v)
 static int gcd_modulo(int u, int v)
 {
 	int t;
-	while(u>0){
-		if(u < v){
+	while (u > 0) {
+		if (u < v) {
 			t = u;
 			u = v;
 			v = t;
@@ -32,6 +47,7 @@ static int gcd_modulo(int u, int v)
 
 int gcd(int u, int v)
 {
+	//return gcd_classic(int u, int v)
 	return gcd_modulo(u, v);
 }
 

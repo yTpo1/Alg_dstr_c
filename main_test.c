@@ -209,7 +209,7 @@ void test_btree()
 	int bt_inotrav[5] = {4,8,10,13,17};
 	int bt_postotrav[5] = {4,8,13,17,10};
 	int bt_befdel[7] = {3,4,6,8,10,13,17};
-	int bt_del[6] = {3,4,8,13,17,10};
+	int bt_del[6] = {3,4,8,10,13,17};
 	int a_size = 10;
 	int bt_trav[10];
 
@@ -243,7 +243,7 @@ void test_btree()
 	//for (int i = 0; i < 7; i++)
 	//	printf(" %d ", bt_trav[i]);
 	test_intarray_eq(bt_befdel, bt_trav, 7, "Binary Tree - 2 new elem");
-	//bt_delete_node(root, 6);
+	bt_delete_node(root, 6);
 
 	bt_traverse(root, 2, bt_trav, a_size);
 	test_intarray_eq(bt_del, bt_trav, 6, "Binary Tree - after delete");

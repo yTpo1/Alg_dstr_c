@@ -87,31 +87,17 @@ struct tree_node *delete(int key, struct tree_node *node)
 		return node;
 	}
 	else if (node->value == key) {
-		//if (node->left == NULL && node->right == NULL)
-		//	free(node);
-		if (node->left != NULL) {
-			//struct tree_node *nl;
-			//nl = node->left;
-			//node->value = nl->value;
-			//// check if the left node has children of its own
-			//if (nl->right != NULL)
-			//	node->right = nl->right;
-			//if (nl->left != NULL)
-			//	node->left = nl->left;
-			//free(nl);
-			//node->left = NULL;
+		// If left or both children don't exist
+		if (node->left == NULL) {
+			free(node);
 			return node->right;
-		} else if (node->right != NULL) {
-			//struct tree_node *nr;
-			//node->value = nr->value;
-			//// check if the right node has children of its own
-			//if (nr->left != NULL)
-			//	node->left = nr->left;
-			//if (nr->right != NULL)
-			//	node->right = nr->right;
-			//free(nr);
+		}
+		else if (node->right == NULL) {
+			free(node);
 			return node->left;
-		} else { // both right and left children are not NULL
+		}
+		else { 
+			// Both right and left children are not NULL
 			node->right = lift(node->right, node);
 			return node;
 		}
@@ -125,11 +111,8 @@ struct tree_node *lift(struct tree_node *node, struct tree_node *node_to_del)
 		return node;
 	}
 	else {
-	//if (node->right != NULL) {
-	//node_to_del->value = node->right->value;
-	//node->right = NULL;
-	//}
 		node_to_del->value = node->value;
+		free(node_to_del);
 		return node->right;
 	}
 }

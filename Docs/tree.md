@@ -53,6 +53,74 @@ Traversal:
   * Then, traverse right subtree completely.
   * Then, process data of node.
 
+Deletion:
+1. If the node being deleted has no children, simply delete it.
+2. If the node being deleted has one child, delete it and plug the child into the spot where the deleted node was
+3. When deleting a node with two children, replace the deleted node with the successor node. The successor node is the child node whose value is the least of all values that are greater than the deleted node.
+  * If the successor node has a right child, after plugging the successor node into the spot of the deleted node, take the right child of the successor node and turn it into the left child of the parent of the successor node.
+
+```
+    def delete(self, value_to_delete, node):
+        # The base case is when we've hit the bottom of the tree,
+        # and the parent node has no children:
+        if node is None:
+            return None
+
+        # If the value we're deleting is less or greater than the current node,
+        # we set the left or right child respectively to be
+        # the return value of a recursive call of this very method on the
+        current
+        # node's left or right subtree.
+        elif value_to_delete < node.value:
+            node.left_child = self.delete(value_to_delete, node.left_child)
+            # We return the current node (and its subtree if existent) to
+            # be used as the new value of its parent's left or right child:
+            return node
+        elif value_to_delete > node.value:
+            node.right_child = self.delete(value_to_delete, node.right_child)
+            return node
+
+        # If the current node is the one we want to delete:
+        elif value_to_delete == node.value:
+
+            # If the current node has no left child, we delete it by
+            # returning its right child (and its subtree if existent)
+            # to be its parent's new subtree:
+            if node.left_child is None:
+                return node.right_child
+
+            # (If the current node has no left OR right child, this ends up
+            # being None as per the first line of code in this function.) 
+            # or as I have noticed, being covered by the obove if statement
+            elif node.right_child is None:
+                return node.left_child
+
+            # If the current node has two children, we delete the current node
+            # by calling the lift function (below), which changes the current
+            node's
+            # value to the value of its successor node:
+            else:
+                node.right_child = self.lift(node.right_child, node)
+                return node
+
+    def lift(self, node, node_to_delete):
+        # If the current node of this function has a left child,
+        # we recursively call this function to continue down
+        # the left subtree to find the successor node.
+        if node.left_child:
+            node.left_child = self.lift(node.left_child, node_to_delete)
+            return node
+        # If the current node has no left child, that means the current node
+        # of this function is the successor node, and we take its value
+        # and make it the new value of the node that we're deleting:
+        else:
+            node_to_delete.value = node.value
+            # We return the successor node's right child to be now used
+            # as its parent's left child:
+            return node.right_child
+```
+[src](#dstr_a_wengrow_j) page 247
+
 [src](#link1)
 During traversal use stack to record each element. After convert it to array.
 

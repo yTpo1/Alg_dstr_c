@@ -362,6 +362,7 @@ void run_data_structure_tests()
 	test_queue();
 	test_btree();
 }
+
 void run_number_tests()
 {
 	test_gcd();
@@ -372,6 +373,7 @@ void run_number_tests()
 	test_char_to_int();
 	test_posfix_equation();
 }
+
 int main(int argc, char* argv[]){
     run_array_tests();
     run_str_tests();

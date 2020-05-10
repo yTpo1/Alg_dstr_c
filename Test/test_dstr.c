@@ -7,6 +7,7 @@
 #include "../Dstr/circ_link_list.h"
 #include "../Dstr/binary_tree.h"
 #include "../Dstr/hash_table.h"
+#include "../Dstr/hash_table_oaddr.h"
 #include "../Algorithms/hash_function.h"
 
 // TODO: move to algorithms
@@ -39,6 +40,25 @@ void test_hash_table()
 	ht_delete(ht);
 }
 
+void test_hash_table_open_addressing()
+{
+	struct htoa_item **ht;
+	ht = htoa_init();
+	htoa_insert(ht, "moon", 4, "sun", 3);
+	assert_str_equal(htoa_search(ht, "moon", 4), "sun", "ht1");
+	assert_str_equal(htoa_search(ht, "hello", 5), NULL, "ht2");
+	htoa_insert(ht, "tree", 4, "bush", 4);
+	assert_str_equal(htoa_search(ht, "tree", 4), "bush", "ht3");
+	assert_str_equal(htoa_search(ht, "hello", 5), NULL, "ht4");
+
+	htoa_insert(ht, "qwer", 4, "aaaa", 4);
+	htoa_insert(ht, "asdf", 4, "bbbb", 4);
+	htoa_insert(ht, "zxcv", 4, "cccc", 4);
+	htoa_insert(ht, "fdas", 4, "dddd", 4);
+	htoa_insert(ht, "fghj", 4, "eeee", 4);
+	assert_str_equal(htoa_search(ht, "fdas", 4), "dddd", "ht5");
+	//ht_delete(ht);
+}
 void test_linked_list()
 {
 	int answ[4];

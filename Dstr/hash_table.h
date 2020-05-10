@@ -1,18 +1,17 @@
-#include "../Algorithms/hash_function.h"
 #define HTSIZE  11 // maxbuckets, also should be prime?
-#define HTPRIME 129
 
-struct ht_item {
-	struct ht_item *next;
+
+struct htll_item {
+	struct htll_item *next;
 	char *key;
 	char *value;
 };
 
-//struct ht_item *hash_table[HTSIZE];
+//struct htll_item *hash_table[HTSIZE];
 
 struct hash_table {
-	//struct ht_item **ht;
-	struct ht_item *ht[HTSIZE];
+	//struct htll_item **ht;
+	struct htll_item *ht[HTSIZE];
 };
 //int *ht_table;
 

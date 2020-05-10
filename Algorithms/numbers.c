@@ -3,16 +3,30 @@
 #include "numbers.h"
 
 // Time: O(2^n). Space: O(n)
-int fibonacci_r(int lim)
+int fibonacci_r(int n)
 {
-	if (lim <= 1)
-		return 1;
-	return fibonacci(lim - 1) + fibonacci(lim - 2);
+	if (n <= 1)
+		return n;
+	return fibonacci_r(n - 1) + fibonacci_r(n - 2);
 }
 
 // Time: O(n). Space: O(1)
-int fibonacci_i(int lim)
+int fibonacci_i(int n)
 {
+	return 0;
+}
+
+// polynomial
+// Time: O(n)
+int horner(int poly[], int len, int x)
+{
+	int res = poly[0];
+	for (int i = 1; i < len; i++) {
+		printf("%dres = %dres * %dx + %dpoly[i];\n", res, res, x, poly[i]);
+		res = res * x + poly[i];
+	}
+	printf("%d\n", res);
+	return res;
 }
 
 // Euclidean algorithm by subtraction

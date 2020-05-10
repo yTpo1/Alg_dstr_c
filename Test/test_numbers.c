@@ -1,5 +1,14 @@
 #include "test_numbers.h"
 
+void test_horner()
+{
+	// 2x^3-6x^2+2x-1
+	int poly1[4] = {2,-6, 2, -1};
+	int poly2[4] = {-1,2,-6,2};
+	test_intequal(horner(poly1, 4, 3), 5, "horner");
+	test_intequal(horner(poly2, 4, 3), 5, "horner");
+}
+
 void test_posfix_equation()
 {
 	struct node *head;
@@ -47,11 +56,11 @@ void test_b_to_d()
 	char s[8];
 	memset(s,'\0',8*sizeof(char));
 	b_to_d(10, s);
-	test_strequal(s,"1010", "Binary to decimal");
+	assert_str_equal(s,"1010", "Binary to decimal");
 
 	memset(s,'\0',8*sizeof(char));
 	b_to_d(31, s);
-	test_strequal(s,"11111", "Binary to decimal");
+	assert_str_equal(s,"11111", "Binary to decimal");
 }
 
 void test_prime_numbers()
@@ -64,12 +73,13 @@ void test_prime_numbers()
 
 void test_fibonacci()
 {
-	test_intequal(fibonacci(2), 1, "fib");
-	test_intequal(fibonacci(3), 1, "fib");
-	test_intequal(fibonacci(4), 2, "fib");
-	test_intequal(fibonacci(5), 3, "fib");
-	test_intequal(fibonacci(6), 5, "fib");
-	test_intequal(fibonacci(7), 8, "fib");
+	test_intequal(fibonacci_r(1), 1, "fib");
+	test_intequal(fibonacci_r(2), 1, "fib");
+	test_intequal(fibonacci_r(3), 2, "fib");
+	test_intequal(fibonacci_r(4), 3, "fib");
+	test_intequal(fibonacci_r(5), 5, "fib");
+	test_intequal(fibonacci_r(6), 8, "fib");
+	test_intequal(fibonacci_r(7), 13, "fib");
 }
 
 void run_number_tests()
@@ -82,4 +92,5 @@ void run_number_tests()
 	test_prime_numbers();
 	test_char_to_int();
 	test_posfix_equation();
+	test_horner();
 }

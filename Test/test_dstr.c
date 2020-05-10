@@ -6,7 +6,38 @@
 #include "../Dstr/queue.h"
 #include "../Dstr/circ_link_list.h"
 #include "../Dstr/binary_tree.h"
+#include "../Dstr/hash_table.h"
+#include "../Algorithms/hash_function.h"
 
+// TODO: move to algorithms
+void test_hashing()
+{
+//unsigned hash_simple(char *value, int len, int prime, int htsize);
+//unsigned hash_horner(char *value, int len, int prime, int htsize);
+	//unsigned hash(char *value, int len, int prime, int htsize);
+	test_intequal(hash_simple("moon", 4, 31, 11), 10, "hashing");
+	test_intequal(hash_simple("tree", 4, 31, 11), 10, "hashing");
+}
+
+void test_hash_table()
+{
+	struct hash_table *ht;
+	ht = ht_init();
+	ht_insert(ht, "moon", 4, "sun", 3);
+	assert_str_equal(ht_search(ht, "moon", 4), "sun", "ht1");
+	assert_str_equal(ht_search(ht, "hello", 5), NULL, "ht2");
+	ht_insert(ht, "tree", 4, "bush", 4);
+	assert_str_equal(ht_search(ht, "tree", 4), "bush", "ht3");
+	assert_str_equal(ht_search(ht, "hello", 5), NULL, "ht4");
+
+	ht_insert(ht, "qwer", 4, "aaaa", 4);
+	ht_insert(ht, "asdf", 4, "bbbb", 4);
+	ht_insert(ht, "zxcv", 4, "cccc", 4);
+	ht_insert(ht, "fdas", 4, "dddd", 4);
+	ht_insert(ht, "fghj", 4, "eeee", 4);
+	assert_str_equal(ht_search(ht, "fdas", 4), "dddd", "ht5");
+	ht_delete(ht);
+}
 
 void test_linked_list()
 {
@@ -169,27 +200,24 @@ void test_btree()
 	bt_insert(root, 6);
 	bt_insert(root, 3);
 	bt_traverse(root, 2, bt_trav, a_size);
-	//for (int i = 0; i < 7; i++)
-	//	printf(" %d ", bt_trav[i]);
+
 	test_intarray_eq(bt_befdel, bt_trav, 7, "Binary Tree - 2 new elem");
 	bt_delete_node(root, 6);
 
 	bt_traverse(root, 2, bt_trav, a_size);
 	test_intarray_eq(bt_del, bt_trav, 6, "Binary Tree - after delete");
 
-	//btree_trav = traverse_btree();
-	////traverse_btree_to_a(btree_trav);
-	//bt_free(root);
-	
 	bt_delete_tree(root);
 }
 
 void run_data_structure_tests()
 {
-	test_linked_list();
-	test_circular_linked_list();
-	test_stack_array();
-	test_stack_ll();
-	test_queue();
-	test_btree();
+	//test_linked_list();
+	//test_circular_linked_list();
+	//test_stack_array();
+	//test_stack_ll();
+	//test_queue();
+	//test_btree();
+	test_hash_table();
+	test_hashing();
 }

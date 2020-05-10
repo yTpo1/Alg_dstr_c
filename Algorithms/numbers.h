@@ -13,3 +13,6 @@ void prime_numers(int n, int a[]);
 int char_to_int(char c);
 int solve_equation_posfix(struct node *head, char *s);
 int fibonacci(int lim);
+int fibonacci_r(int lim);
+int fibonacci_i(int lim);
+int horner(int poly[], int len, int x);

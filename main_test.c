@@ -6,6 +6,7 @@
 
 #include "Test/test_numbers.h"
 #include "Test/test_dstr.h"
+#include "Test/test_cryptography.h"
 
 #define SIZEMAX 1000
 
@@ -22,13 +23,13 @@ void run_str_tests(){
     char arr[SIZEMAX] = "heey boss";
     char reverse[SIZEMAX] = "ssob yeeh";
     reverse_array(arr);
-    test_strequal(reverse, arr, "reverse_array");
+    assert_str_equal(reverse, arr, "reverse_array");
     
     char dup_init[SIZEMAX] = "heey boss";
     char dup[SIZEMAX];
     char dup_correct[SIZEMAX] = "es";
     find_duplicate_characters(dup_init, dup);
-    test_strequal(dup_correct, dup, "find_duplicate");
+    assert_str_equal(dup_correct, dup, "find_duplicate");
 
     char anagram1[SIZEMAX] = "hey boss";
     char anagram2[SIZEMAX] = "yo sosyh";
@@ -42,8 +43,8 @@ void run_str_tests(){
     char rmvchar2_answer[SIZEMAX] = "hey bo";
     rmv_char_from_str(rmvchar1, 'e', 8);
     rmv_char_from_str(rmvchar2, 's', 8);
-    test_strequal(rmvchar1_answer, rmvchar1, "rmv_char_from_str");
-    test_strequal(rmvchar2_answer, rmvchar2, "rmv_char_from_str");
+    assert_str_equal(rmvchar1_answer, rmvchar1, "rmv_char_from_str");
+    assert_str_equal(rmvchar2_answer, rmvchar2, "rmv_char_from_str");
 }
 
 void reset_dummy_array(int *a){
@@ -60,7 +61,7 @@ void run_array_tests(){
     char s1[SIZEMAX] = "hey boss";
     char s2[SIZEMAX] = " behossy";
     insertion_sort_char(s1, 9);
-    test_strequal(s2, s1, "insertion_sort_char");
+    assert_str_equal(s2, s1, "insertion_sort_char");
 
     test_intequal(1, binary_search(sorted_answer, 2, 0, 9), "binary_seach");
     test_intequal(1, binary_search(sorted_answer, 10, 0, 10), "binary_seach");
@@ -111,12 +112,14 @@ void run_array_tests(){
 
 
 
-int main(int argc, char* argv[]){
-    run_array_tests();
-    run_str_tests();
-    run_data_structure_tests();
-    run_number_tests();
+int main(int argc, char *argv[])
+{
+	//run_array_tests();
+	//run_str_tests();
+	run_data_structure_tests();
+	//run_number_tests();
+	//run_test_cryptography();
 
-    print_test_status();
-    return 0;
+	print_test_status();
+	return 0;
 }

@@ -31,8 +31,8 @@ void ht_delete(struct hash_table *ht)
 				tmp = tmpnext;
 				tmpnext = NULL;
 			}
-			if (ht->ht[i] != NULL)
-				free(ht->ht[i]);
+			//if (ht->ht[i] != NULL)
+			//	free(ht->ht[i]);
 			//free(ht->ht[i]->value);
 			//free(ht->ht[i]->key);
 			//free(ht->ht[i]);

@@ -17,6 +17,11 @@ struct htoa_item **htoa_init()
 {
 	struct htoa_item **ht_items;
 	ht_items = (struct htoa_item **) malloc(HTSIZE * sizeof(struct htoa_item *));
+	for (int i = 0; i < HTSIZE; i++) {
+		//ht_items[i]->key = NULL;
+		//ht_items[i]->value = NULL;
+		ht_items[i] = NULL;
+	}
 	return ht_items;
 }
 
@@ -41,11 +46,51 @@ char *htoa_search(struct htoa_item **ht_items, char *key, int klen)
 {
 	int index = 0;
 	index = hash_simple(key, klen, HTPRIME, HTSIZE);
-	while (strncmp(ht_items[index]->key, key, klen) != 0 && 
-			ht_items[index] != NULL)
+	if (ht_items[index] == NULL)
+		return NULL;
+	while (ht_items[index] != NULL && 
+			strncmp(ht_items[index]->key, key, klen) != 0)
 		index++;
 	if (ht_items[index]->value != NULL)
 		return ht_items[index]->value;
 	else
 		return NULL;
+}
+
+int htoa_delete_item(struct htoa_item **ht, char *key, int klen)
+{
+	int index = 0;
+	index = hash_simple(key, klen, HTPRIME, HTSIZE);
+	if (ht[index] == NULL)
+		return 0;
+	while (ht[index] != NULL && 
+			strncmp(ht[index]->key, key, klen) != 0)
+		index++;
+	if (ht[index]->value != NULL) {
+		free(ht[index]->key);
+		free(ht[index]->value);
+		ht[index]->key = NULL;
+		ht[index]->value = NULL;
+		free(ht[index]);
+		return 1;
+	}
+	else
+		return 0;
+}
+void htoa_traverse_tmp(struct htoa_item **ht)
+{
+	for (int i = 0; i < HTSIZE; i++) {
+	}
+}
+
+void htoa_delete(struct htoa_item **ht)
+{
+	for (int i = 0; i < HTSIZE; i++) {
+		if (ht[i] != NULL) {
+			free(ht[i]->key);
+			free(ht[i]->value);
+			free(ht[i]);
+		}
+	}
+	free(ht);
 }

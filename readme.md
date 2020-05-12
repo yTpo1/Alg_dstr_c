@@ -14,8 +14,6 @@ MEMORY: ALWAYS MAKE SURE ALL VARIABLES ARE INITIALIZED TO 0 OR NULL!!!! ALWAYS!!
 ## Array:
 Array also correspond directly to vectors, the mathematical term for indexed list of objects. 
 Two-dimentsional arrays correspond to matrices. [src](#b-alg-c-segw)
-* Prime Numbers. Print all prime numbers less than 1000. "" Category: number, array   
-  - Solution 1. "Sieve of Eratosthenes. Origin 300BC" [src](#b-alg-c-segw) TODO: implement with constraints of input array size, other wize a stack smash and buffer overflow is guaranteed.
 * Find Median
 * Find Max Min "find_max_min("
 Search:

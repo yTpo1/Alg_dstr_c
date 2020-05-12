@@ -71,6 +71,18 @@ void test_prime_numbers()
 	test_intequal(a[10], 31, "Prime Numbers");
 }
 
+void test_isprime()
+{
+	test_intequal(isprime_trial_division(17), 1, "prime1");
+	test_intequal(isprime_trial_division(5639), 1, "prime2");
+	test_intequal(isprime_trial_division(7591), 1, "prime3");
+	test_intequal(isprime_trial_division(9677), 1, "prime4");
+	test_intequal(isprime_trial_division(22), 0, "prime5");
+	test_intequal(isprime_trial_division(59875), 0, "prime6");
+	test_intequal(isprime_trial_division(123212), 0, "prime7");
+	test_intequal(isprime_trial_division(100100), 0, "prime8");
+}
+
 void test_fibonacci()
 {
 	test_intequal(fibonacci_r(1), 1, "fib");
@@ -89,8 +101,9 @@ void run_number_tests()
 	test_fibonacci();
 	test_fraction_to_lowest_terms();
 	test_b_to_d();
+	test_isprime();
 	test_prime_numbers();
 	test_char_to_int();
 	test_posfix_equation();
-	test_horner();
+	//test_horner();
 }

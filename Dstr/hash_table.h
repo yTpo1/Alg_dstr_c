@@ -1,4 +1,4 @@
-#define HTSIZE  11 // maxbuckets, also should be prime?
+//#define HTSIZE  11 // maxbuckets, also should be prime?
 
 
 struct htll_item {
@@ -11,7 +11,9 @@ struct htll_item {
 
 struct hash_table {
 	//struct htll_item **ht;
-	struct htll_item *ht[HTSIZE];
+	//struct htll_item *ht[HTSIZE];
+	struct htll_item **ht;
+	int size;
 };
 //int *ht_table;
 

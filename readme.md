@@ -64,7 +64,7 @@ Implemented:
 * [Queue](Docs/queue.md)
 * [Tree](Docs/tree.md)
 * Doubly Linked List
-* Graphs
+* [Graphs](Docs/graph.md)
 
 * https://www.studytonight.com/data-structures/
 

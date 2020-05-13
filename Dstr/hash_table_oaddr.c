@@ -61,7 +61,7 @@ static void check_size(struct htoa *ht)
 	if (ht->size < 11)
 		return;
 	float load = (float)ht->count / (float)ht->size;
-	printf("count:%d size:%d load: %f\n", ht->count, ht->size, load);
+	//printf("count:%d size:%d load: %f\n", ht->count, ht->size, load);
 
 	if (load > 0.7) 
 		resize(ht, ht->size * 2);

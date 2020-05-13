@@ -9,11 +9,25 @@
 #include "../Dstr/hash_table.h"
 #include "../Dstr/hash_table_oaddr.h"
 #include "../Algorithms/hash_function.h"
+#include "../Dstr/graph.h"
 
 #include <stdlib.h>
 #include <time.h>
 
-// TODO: move to algorithms
+void test_graph()
+{
+	struct graph *gr = gr_init(4);
+	for (int i = 0; i < 4; i++)
+		gr_insert_vertex(gr, 'A'+i);
+
+	gr_connect_vertices(gr, 0,1);
+	gr_connect_vertices(gr, 0,3);
+	gr_connect_vertices(gr, 1,2);
+	gr_connect_vertices(gr, 2,3);
+
+	gr_delete(gr);
+}
+
 void test_hashing()
 {
 //unsigned hash_simple(char *value, int len, int prime, int htsize);
@@ -279,14 +293,15 @@ void test_btree()
 
 void run_data_structure_tests()
 {
-	test_linked_list();
-	test_circular_linked_list();
-	test_stack_array();
-	test_stack_ll();
-	test_queue();
-	test_btree();
-	test_hashing();
-	test_hash_table();
-	test_hash_table_open_addressing();
-	test_hashtable_openaddr_resizing();
+	//test_linked_list();
+	//test_circular_linked_list();
+	//test_stack_array();
+	//test_stack_ll();
+	//test_queue();
+	//test_btree();
+	//test_hashing();
+	//test_hash_table();
+	//test_hash_table_open_addressing();
+	//test_hashtable_openaddr_resizing();
+	test_graph();
 }

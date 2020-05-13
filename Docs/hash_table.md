@@ -1,6 +1,5 @@
 Contents:
-* Associative Array
-* Hash Table
+* Hash Table (Associative Array Abstract Data Type)
   - Hashing
   - Collisions
     * Open Addressing
@@ -9,13 +8,11 @@ Contents:
   - Resizing
   - Hash Search
 
-# Associative Array Abstract Data Type
+# Hash Table (Associative Array Abstract Data Type)
 An associative array, map, symbol table, or dictionary is an abstract data type composed of a collection of (key, value) pairs, such that each possible key appears at most once in the collection. 
 * https://en.wikipedia.org/wiki/Associative_array
 
-# Hash Table
-A hash table is a data structure that offers very fast inser-
-tion and searching. 
+A hash table is a data structure that offers very fast insertion and searching. 
 Hash tables are faster than trees, but can't visit items in order.
 [src](#b_dstr_alg_java_r_lafore) page 544
 

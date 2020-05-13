@@ -10,14 +10,16 @@ struct htoa {
 	int count;
 };
 
-//struct htoa_item **htoa_init();
-struct htoa *htoa_init();
-//void htoa_insert(struct htoa_item **ht_items, char *key, int klen, char *value, int vlen);
+struct htoa *htoa_init(int size);
 void htoa_insert(struct htoa *ht, char *key, int klen, char *value, int vlen);
-//char *htoa_search(struct htoa_item **ht_items, char *key, int klen);
 char *htoa_search(struct htoa *ht, char *key, int klen);
-//int htoa_delete_item(struct htoa_item **ht, char *key, int klen);
 int htoa_delete_item(struct htoa *ht, char *key, int klen);
-//void htoa_delete(struct htoa_item **ht);
 void htoa_delete(struct htoa *ht);
-//void htoa_traverse_tmp(struct htoa_item **ht);
+
+
+static struct htoa_item **new_ht_array(int size);
+static void check_size(struct htoa *ht);
+static void resize(struct htoa *ht, int new_aprox_size);
+static void rehash(struct htoa *ht, struct htoa *nht);
+static int find_closest_prime(int n);
+static void insert(struct htoa *ht, char *key, int klen, char *value, int vlen);

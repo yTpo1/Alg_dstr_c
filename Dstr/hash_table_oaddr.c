@@ -1,22 +1,84 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "hash_table_oaddr.h"
 #include "../Algorithms/hash_function.h"
+#include "../Algorithms/numbers.h"
 
-//#define HTSIZE  11 // maxbuckets, also should be prime?
 #define HTPRIME 129 // prime larger than total ascii characters
 
-//struct ht_oaddr {
-//	struct ht_item *hti[HTSIZE];
-//};
+static int find_closest_prime(int n)
+{
+	while (isprime_trial_division(n) == 0)
+		n++;
+	return n;
+}
+
+static void rehash(struct htoa *ht, struct htoa *nht)
+{
+	for (int i = 0; i < ht->size; i++) {
+		if (ht->ht[i] != NULL)
+			insert(nht, ht->ht[i]->key,
+				strlen(ht->ht[i]->key),
+				ht->ht[i]->value,
+				strlen(ht->ht[i]->value));
+	}
+}
+
+static void resize(struct htoa *ht, int new_aprox_size)
+{
+	struct htoa *new_ht = htoa_init(new_aprox_size);
+	rehash(ht, new_ht);
+	
+	struct htoa_item **tmp = NULL;
+	int tmpsize = ht->size;
+	tmp = ht->ht;
+
+	ht->ht = new_ht->ht;
+	ht->count = new_ht->count;
+	ht->size = new_ht->size;
+
+	new_ht->ht = tmp;
+	new_ht->size = tmpsize;
+	htoa_delete(new_ht);
+	//ht = new_ht;
+	//printf("changing size to new_aprox_size:%d ht->size:%d newht->size:%d\n", new_aprox_size, ht->size, new_ht->size);
+}
+
+static struct htoa_item **new_ht_array(int size)
+{
+	struct htoa_item **ht = (struct htoa_item **) malloc(size * sizeof(struct htoa_item *));
+	for (int i = 0; i < size; i++) {
+		ht[i] = NULL;
+	}
+	return ht;
+}
+
+
+static void check_size(struct htoa *ht)
+{
+	if (ht->size < 11)
+		return;
+	float load = (float)ht->count / (float)ht->size;
+	printf("count:%d size:%d load: %f\n", ht->count, ht->size, load);
+
+	if (load > 0.7) 
+		resize(ht, ht->size * 2);
+	else if (load < 0.1)
+		resize(ht, ht->size / 2);
+//	printf("check_size ht->size:%d\n", (*ht)->size);
+}
 
 // init ht_delete ht_insert ht_search
-struct htoa *htoa_init()
+struct htoa *htoa_init(int size)
 {
 	struct htoa *ht;
 	ht = (struct htoa *) malloc(sizeof(struct htoa));
-	ht->size = 11; // initial prime number size
+	if (size < 11)
+		size = 11;
+	ht->size = find_closest_prime(size); // initial prime number size
+	//printf("init ht->size: %d\n", ht->size);
 	ht->ht = (struct htoa_item **) malloc(ht->size * sizeof(struct htoa_item *));
 	ht->count = 0;
 	for (int i = 0; i < ht->size; i++) {
@@ -39,7 +101,7 @@ struct htoa *htoa_init()
 //	return ht_items;
 //}
 
-void htoa_insert(struct htoa *ht, char *key, int klen, char *value, int vlen)
+static void insert(struct htoa *ht, char *key, int klen, char *value, int vlen)
 {
 	int index = hash_simple(key, klen, HTPRIME, ht->size);
 	if (ht->ht[index] == NULL) {
@@ -55,6 +117,14 @@ void htoa_insert(struct htoa *ht, char *key, int klen, char *value, int vlen)
 		ht->ht[index]->value = strndup(value, vlen);
 	}
 	ht->count = ht->count + 1;
+}
+
+
+//void htoa_insert(struct htoa *ht, char *key, char *value)
+void htoa_insert(struct htoa *ht, char *key, int klen, char *value, int vlen)
+{
+	check_size(ht);
+	insert(ht, key, klen, value, vlen);
 }
 
 //void htoa_insert(struct htoa_item **ht_items, char *key, int klen, char *value, int vlen)
@@ -125,6 +195,7 @@ char *htoa_search(struct htoa *ht, char *key, int klen)
 
 int htoa_delete_item(struct htoa *ht, char *key, int klen)
 {
+	check_size(ht);
 	int index = hash_simple(key, klen, HTPRIME, ht->size);
 	if (ht->ht[index] == NULL)
 		return 0;
@@ -138,6 +209,7 @@ int htoa_delete_item(struct htoa *ht, char *key, int klen)
 		ht->ht[index]->value = NULL;
 
 		free(ht->ht[index]);
+		ht->ht[index] = NULL;
 
 		ht->count = ht->count - 1;
 		return 1;
@@ -157,10 +229,15 @@ void htoa_delete(struct htoa *ht)
 	for (int i = 0; i < ht->size; i++) {
 		if (ht->ht[i] != NULL) {
 			free(ht->ht[i]->key);
+			ht->ht[i]->key = NULL;
 			free(ht->ht[i]->value);
+			ht->ht[i]->value = NULL;
 			free(ht->ht[i]);
+			ht->ht[i] = NULL;
 		}
 	}
 	free(ht->ht);
+	ht->ht = NULL;
 	free(ht);
+	ht = NULL;
 }

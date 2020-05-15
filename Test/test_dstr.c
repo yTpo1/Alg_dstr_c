@@ -10,9 +10,45 @@
 #include "../Dstr/hash_table_oaddr.h"
 #include "../Algorithms/hash_function.h"
 #include "../Dstr/graph.h"
+#include "../Dstr/heap.h"
 
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+
+void test_heap()
+{
+	struct heap *h = NULL;
+	int a[11] = {1,3,12,9,7};
+	h = heap_init(11);
+	heap_insert(h, 3);
+	heap_insert(h, 9);
+	heap_insert(h, 12);
+	heap_insert(h, 7);
+	heap_insert(h, 1);
+	test_intarray_eq(h->a, a, 11, "heap");
+}
+
+void test_graph_notcyclic()
+{
+	int gr_size = 5;
+	struct graph *gr = gr_init(gr_size);
+	for (int i = 0; i < gr_size; i++)
+		gr_insert_vertex(gr, 'A'+i);
+
+	gr_connect_vertices(gr, 0,1);
+	gr_connect_vertices(gr, 1,2);
+	gr_connect_vertices(gr, 1,4);
+	gr_connect_vertices(gr, 2,3);
+
+	char trav[6] = "";
+	char correct[6] = "ABCED\0";
+
+	gr_dfs(gr, 'A', trav);
+	assert_str_equal(trav, correct, "graph");
+
+	gr_delete(gr);
+}
 
 void test_graph()
 {
@@ -24,6 +60,20 @@ void test_graph()
 	gr_connect_vertices(gr, 0,3);
 	gr_connect_vertices(gr, 1,2);
 	gr_connect_vertices(gr, 2,3);
+
+	char trav[5] = "";
+	char correct[5] = "ABDC\0";
+	//correct[0] = 'A'; correct[0] = 'B'; correct[0] = 'D'; correct[0] = 'C';
+	gr_dfs(gr, 'A', trav);
+	assert_str_equal(trav, correct, "graph");
+
+	gr_dfs(gr, 'C', trav);
+	correct[0] = 'C'; correct[3] = 'A';
+	assert_str_equal(trav, correct, "graph");
+
+	correct[0] = 'D'; correct[1] = 'A'; correct[2] = 'C'; correct[3] = 'B';
+	gr_dfs(gr, 'D', trav);
+	assert_str_equal(trav, correct, "graph");
 
 	gr_delete(gr);
 }
@@ -303,5 +353,7 @@ void run_data_structure_tests()
 	//test_hash_table();
 	//test_hash_table_open_addressing();
 	//test_hashtable_openaddr_resizing();
-	test_graph();
+	//test_graph();
+	//test_graph_notcyclic();
+	test_heap();
 }

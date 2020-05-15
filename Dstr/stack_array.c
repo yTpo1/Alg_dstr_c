@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include "stack_array.h"
 
-struct sa_stack *sa_init()
+struct sa_stack *sa_init(void)
 {
 	struct sa_stack *new;
 	new = (struct sa_stack *) malloc (sizeof *new);
-	new->buffer = (int*)malloc(STACKSIZE * sizeof(int));
+	new->buffer = (int*) malloc(STACKSIZE * sizeof(int));
 	new->index_buff = 0;
 	return new;
 }

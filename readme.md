@@ -2,7 +2,7 @@
 Note: 
 * learning for different books and online resources made me realize that allot of these learning reasources either don't provide complete and correct implementation. So best choice is to be reading through a couple of them at the same time.
 
-* Read a couple of sources at the same time for the same topic
+* Read/watch a couple of sources at the same time for the same topic
 * Read the chapter first and try to implement it with out looking, and look only when stuck.
 
 MEMORY: ALWAYS MAKE SURE ALL VARIABLES ARE INITIALIZED TO 0 OR NULL!!!! ALWAYS!!!! Use calloc where applicable. memset to 0 and so on
@@ -20,14 +20,7 @@ Search:
 * Binary Search
 
 ## Sorting Algorithms:
-Implemented:
-* Bubble sort
-* Heap sort
-* Insertion sort
-* Merge sort
-* Quick sort - [src](#b_kr) - page:87,110,120
-* Shell sort - [src](#b_kr) - page:62
-* Straight selection sort
+[Sorting](Docs/sorting.md)
 
 ## String:
 * String with Reverse Polish notation/postfix to stack
@@ -77,6 +70,17 @@ Implemented:
 
 * https://www.youtube.com/watch?v=mbtI3w5qxnI&list=PL6qqFPx9xQ1hLOoYAiQ-Me0xa2nlDTjys
 * https://www.khanacademy.org/computing/computer-science/cryptography
+
+## Reusability
+* How to build reusable data types and algorithms in C?
+[tree.h in freebsd.](https://github.com/freebsd/freebsd/blob/master/sys/sys/tree.h) It implements functions inside some long macros. Before calling these functions, you need to instantiate them with proper types. This style is closer to C++ template and incurs little overhead in the sense that it can achieve the same performance as a type-specific implementation. This is my preference.
+
+[list.h in Linux kernel.](https://github.com/torvalds/linux/blob/master/include/linux/list.h) It embeds a predefined struct to the struct holding the actual data. Here is an example program. uthash follows a somewhat similar route, though it uses much more macros.
+
+[avl.c from libavl and Glib.](https://github.com/sam0x17/libavl_fork/blob/master/avl.c) It uses void\* pointers to represent generic data types. I don't like this approach personally because it often hurts performance. However, many others hold different opinions.
+
+* Check out the book "C Interfaces and Implementations". It has a lot of good ideas and practices.
+
 
 ## Sources:
 1. <a name="b_kr"></a>[Book] The C Programming Language 2nd Edition by Brian Kernighan and Dennis Ritchie

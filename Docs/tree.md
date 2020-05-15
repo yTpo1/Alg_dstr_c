@@ -1,4 +1,7 @@
 Tags: tree, binary tree, recursion
+Contents:
+* [Representing tree as an Array](#asanarray)
+
 # Tree
 ### Terminology
 tree - nonempty collection of vertices and edges
@@ -129,6 +132,8 @@ During traversal use stack to record each element. After convert it to array.
 
 ### Problems / Exercises
 * a
+
+## Representing tree as an Array <a name="asanarray"></a>
 
 ## Sources
 * <a name="dstr_a_wengrow_j"></a>[book] A Common-Sense Guide to Data Structures and Algorithms - Jay Wengrow (2017)

@@ -57,6 +57,8 @@ Implemented:
 * [Queue](Docs/queue.md)
 * [Tree](Docs/tree.md)
 * Doubly Linked List
+* Priority Queue -> look in "Stacks and queues" in Lafore
+* [Heap](Docs/heap.md)
 * [Graphs](Docs/graph.md)
 
 * https://www.studytonight.com/data-structures/

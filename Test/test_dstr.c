@@ -16,17 +16,90 @@
 #include <time.h>
 #include <string.h>
 
+void test_max_heap2()
+{
+	struct heap *h = NULL;
+	int corr[10] = {16,14,10,8,7,9,3,2,4,1};
+	h = heap_init(10);
+	h->size = 10;
+	h->a[0] = 4;
+	h->a[1] = 1;
+	h->a[2] = 3;
+	h->a[3] = 2;
+	h->a[4] = 16;
+	h->a[5] = 9;
+	h->a[6] = 10;
+	h->a[7] = 14;
+	h->a[8] = 8;
+	h->a[9] = 7;
+
+	build_max_heap(h);
+	test_intarray_eq(h->a, corr, 10, "max-heap build");
+
+	heap_free(h);
+}
+
+void test_max_heap()
+{
+
+	struct heap *h = NULL;
+	int corr[10] = {16,14,10,8,7,9,3,2,4,1};
+	h = heap_init(10);
+	h->size = 10;
+	h->a[0] = 16;
+	h->a[1] = 4;
+	h->a[2] = 10;
+	h->a[3] = 14;
+	h->a[4] = 7;
+	h->a[5] = 9;
+	h->a[6] = 3;
+	h->a[7] = 2;
+	h->a[8] = 8;
+	h->a[9] = 1;
+	max_heapify(h, 1);
+	test_intarray_eq(h->a, corr, 10, "maxheap");
+	heap_free(h);
+
+}
+
 void test_heap()
 {
 	struct heap *h = NULL;
-	int a[11] = {1,3,12,9,7};
+	int corr[11] = {1,3,12,9,7};
+	int corr2[11] = {1,7,12,9};
+	int corr3[11] = {1,7,12,9,7};
+	int cormax[11] = {12, 9, 1, 3, 7};
 	h = heap_init(11);
 	heap_insert(h, 3);
 	heap_insert(h, 9);
 	heap_insert(h, 12);
 	heap_insert(h, 7);
 	heap_insert(h, 1);
-	test_intarray_eq(h->a, a, 11, "heap");
+	test_intequal(h->size, 5, "heap");
+	test_intarray_eq(h->a, corr, 11, "heap");
+
+	heap_delete_item(h, 3);
+	test_intequal(h->size, 4, "heap");
+	test_intarray_eq(h->a, corr2, 11, "heap");
+
+	heap_insert(h, 3);
+	test_intequal(h->size, 5, "heap");
+	test_intarray_eq(h->a, corr, 11, "heap");
+
+	heap_delete_item_v2(h, 3);
+	test_intequal(h->size, 4, "heap");
+	test_intarray_eq(h->a, corr3, 11, "heap");
+
+	heap_insert(h, 3);
+	test_intequal(h->size, 5, "heap");
+	test_intarray_eq(h->a, corr, 11, "heap");
+
+	//heap_insert(h, 10);
+	build_max_heap(h);
+	test_intequal(h->size, 5, "heap");
+	test_intarray_eq(h->a, cormax, 11, "max-heap");
+
+	heap_free(h);
 }
 
 void test_graph_notcyclic()
@@ -356,4 +429,6 @@ void run_data_structure_tests()
 	//test_graph();
 	//test_graph_notcyclic();
 	test_heap();
+	test_max_heap();
+	test_max_heap2();
 }

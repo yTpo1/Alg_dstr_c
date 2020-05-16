@@ -27,7 +27,7 @@ void assert_char_eq(char a, char b, char *t_name)
 
 // TODO: this function is absolute shit. fix it and then start using cmocka or
 // a normal unit test library. FUCK
-void test_intarray_eq(int *a, int *b, int size, char *title)
+void assert_int_array_eq(int *a, int *b, int size, char *title)
 {
 	int error = 0;
 	for (int i = 0; i < size; i++) {
@@ -69,7 +69,7 @@ int my_strlen(char *s){
 //		return 0;
 //}
 
-void assert_str_equal(char *s1, char *s2, char *testname)
+void assert_str_eq(char *s1, char *s2, char *testname)
 {
 	int diff = 0;
 	int isnull = 0;
@@ -98,7 +98,7 @@ void assert_str_equal(char *s1, char *s2, char *testname)
 	count_test_run++;
 }
 
-void test_intequal(int a, int b, char *testname){
+void assert_int_eq(int a, int b, char *testname){
     if(a != b){
         printf("Test \"%s\": int comparison \033[0;31m Failed \033[0m \n", testname);
         printf("%d!=%d\n",a,b);

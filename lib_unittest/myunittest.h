@@ -3,10 +3,10 @@
 
 #define ASIZE 1000
 
-void test_intequal(int a, int b, char *testname);
+void assert_int_eq(int a, int b, char *testname);
 void assert_char_eq(char c, char x, char *t_name);
-void assert_str_equal(char *s1, char *s2, char *testname);
-void test_intarray_eq(int *a, int *b, int size, char *title);
+void assert_str_eq(char *s1, char *s2, char *testname);
+void assert_int_array_eq(int *a, int *b, int size, char *title);
 void print_test_status();
 void print_int_array(int a[], int size);
 

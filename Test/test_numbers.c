@@ -5,8 +5,8 @@ void test_horner()
 	// 2x^3-6x^2+2x-1
 	int poly1[4] = {2,-6, 2, -1};
 	int poly2[4] = {-1,2,-6,2};
-	test_intequal(horner(poly1, 4, 3), 5, "horner");
-	test_intequal(horner(poly2, 4, 3), 5, "horner");
+	assert_int_eq(horner(poly1, 4, 3), 5, "horner");
+	assert_int_eq(horner(poly2, 4, 3), 5, "horner");
 }
 
 void test_posfix_equation()
@@ -14,20 +14,20 @@ void test_posfix_equation()
 	struct node *head;
 	char s[9] = "2 3 5 + *";
 	head = sll_init();
-	test_intequal(solve_equation_posfix(head, s), 16, "posfix equation using stack");
+	assert_int_eq(solve_equation_posfix(head, s), 16, "posfix equation using stack");
 	sll_free(head);
 }
 
 void test_char_to_int()
 {
-	test_intequal(char_to_int('3'), 3, "char to int");
-	test_intequal(char_to_int('9'), 9, "char to int");
+	assert_int_eq(char_to_int('3'), 3, "char to int");
+	assert_int_eq(char_to_int('9'), 9, "char to int");
 }
 
 void test_gcd()
 {
-	test_intequal(gcd(270, 192), 6, "gcd");
-	test_intequal(gcd(461952, 116298), 18, "gcd");
+	assert_int_eq(gcd(270, 192), 6, "gcd");
+	assert_int_eq(gcd(461952, 116298), 18, "gcd");
 }
 
 void test_find_max_min()
@@ -38,7 +38,7 @@ void test_find_max_min()
     //answ_correct[1] = 1;
     int answ[2];
     find_max_min(a, 9, answ);
-    test_intarray_eq(answ_correct, answ, 2, "Number Find Min-Max");
+    assert_int_array_eq(answ_correct, answ, 2, "Number Find Min-Max");
 }
 
 void test_fraction_to_lowest_terms()
@@ -47,8 +47,8 @@ void test_fraction_to_lowest_terms()
 	fr.numerator = 178468;
 	fr.denominator = 267702;
 	fr_low_terms(&fr);
-	test_intequal(fr.numerator, 2, "Fraction to lowest terms");
-	test_intequal(fr.denominator, 3, "Fraction to lowest terms");
+	assert_int_eq(fr.numerator, 2, "Fraction to lowest terms");
+	assert_int_eq(fr.denominator, 3, "Fraction to lowest terms");
 }
 
 void test_b_to_d()
@@ -56,11 +56,11 @@ void test_b_to_d()
 	char s[8];
 	memset(s,'\0',8*sizeof(char));
 	b_to_d(10, s);
-	assert_str_equal(s,"1010", "Binary to decimal");
+	assert_str_eq(s,"1010", "Binary to decimal");
 
 	memset(s,'\0',8*sizeof(char));
 	b_to_d(31, s);
-	assert_str_equal(s,"11111", "Binary to decimal");
+	assert_str_eq(s,"11111", "Binary to decimal");
 }
 
 void test_prime_numbers()
@@ -68,30 +68,30 @@ void test_prime_numbers()
 	int a[200];
 	memset(a, 0, 200*sizeof(int));
 	prime_numers(1000, a);
-	test_intequal(a[10], 31, "Prime Numbers");
+	assert_int_eq(a[10], 31, "Prime Numbers");
 }
 
 void test_isprime()
 {
-	test_intequal(isprime_trial_division(17), 1, "prime1");
-	test_intequal(isprime_trial_division(5639), 1, "prime2");
-	test_intequal(isprime_trial_division(7591), 1, "prime3");
-	test_intequal(isprime_trial_division(9677), 1, "prime4");
-	test_intequal(isprime_trial_division(22), 0, "prime5");
-	test_intequal(isprime_trial_division(59875), 0, "prime6");
-	test_intequal(isprime_trial_division(123212), 0, "prime7");
-	test_intequal(isprime_trial_division(100100), 0, "prime8");
+	assert_int_eq(isprime_trial_division(17), 1, "prime1");
+	assert_int_eq(isprime_trial_division(5639), 1, "prime2");
+	assert_int_eq(isprime_trial_division(7591), 1, "prime3");
+	assert_int_eq(isprime_trial_division(9677), 1, "prime4");
+	assert_int_eq(isprime_trial_division(22), 0, "prime5");
+	assert_int_eq(isprime_trial_division(59875), 0, "prime6");
+	assert_int_eq(isprime_trial_division(123212), 0, "prime7");
+	assert_int_eq(isprime_trial_division(100100), 0, "prime8");
 }
 
 void test_fibonacci()
 {
-	test_intequal(fibonacci_r(1), 1, "fib");
-	test_intequal(fibonacci_r(2), 1, "fib");
-	test_intequal(fibonacci_r(3), 2, "fib");
-	test_intequal(fibonacci_r(4), 3, "fib");
-	test_intequal(fibonacci_r(5), 5, "fib");
-	test_intequal(fibonacci_r(6), 8, "fib");
-	test_intequal(fibonacci_r(7), 13, "fib");
+	assert_int_eq(fibonacci_r(1), 1, "fib");
+	assert_int_eq(fibonacci_r(2), 1, "fib");
+	assert_int_eq(fibonacci_r(3), 2, "fib");
+	assert_int_eq(fibonacci_r(4), 3, "fib");
+	assert_int_eq(fibonacci_r(5), 5, "fib");
+	assert_int_eq(fibonacci_r(6), 8, "fib");
+	assert_int_eq(fibonacci_r(7), 13, "fib");
 }
 
 void run_number_tests()

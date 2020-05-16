@@ -59,6 +59,7 @@ Implemented:
 * Doubly Linked List
 * Priority Queue -> look in "Stacks and queues" in Lafore
 * [Heap](Docs/heap.md)
+* Set/Disjoint-Set/Hash-Set
 * [Graphs](Docs/graph.md)
 
 * https://www.studytonight.com/data-structures/

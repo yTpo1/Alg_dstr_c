@@ -2,20 +2,20 @@
 #include <stdlib.h>
 #include "linked_list.h"
 
-//static struct node *head;
+//static struct ll_node *head;
 
-struct node *ll_init(void)
+struct ll_node *ll_init(void)
 {
-	struct node *new;
-	new = (struct node *)malloc(sizeof(*new));
+	struct ll_node *new;
+	new = (struct ll_node *)malloc(sizeof(*new));
 	new->key = 0;
 	new->next = NULL;
 	return new;
 }
 
-void ll_free(struct node *head)
+void ll_free(struct ll_node *head)
 {
-	struct node *tx, *ty;
+	struct ll_node *tx, *ty;
 	tx = head->next;
 	ty = head;
 	while (tx != NULL) {
@@ -27,10 +27,10 @@ void ll_free(struct node *head)
 }
 	
 
-void ll_insert_front(struct node *head, int v)
+void ll_insert_front(struct ll_node *head, int v)
 {
-	struct node *new;
-	new = (struct node *)malloc(sizeof(*new));
+	struct ll_node *new;
+	new = (struct ll_node *)malloc(sizeof(*new));
 	new->key = v;
 
 	if (head->next == NULL)
@@ -40,10 +40,10 @@ void ll_insert_front(struct node *head, int v)
 	head->next = new;
 }
 
-static struct node *ll_get_preceding_node(struct node *head, struct node *x)
+static struct ll_node *ll_get_preceding_node(struct ll_node *head, struct ll_node *x)
 {
-	struct node *nfirst = head->next;
-	struct node *npreceding = head;
+	struct ll_node *nfirst = head->next;
+	struct ll_node *npreceding = head;
 
 	while (nfirst->next != NULL) {
 		if (x == nfirst)
@@ -56,11 +56,11 @@ static struct node *ll_get_preceding_node(struct node *head, struct node *x)
 	return NULL;
 }
 
-void ll_insert_end(struct node *head, int v)
+void ll_insert_end(struct ll_node *head, int v)
 {
-	struct node *new;
-	struct node *temp;
-	new = (struct node *) malloc (sizeof *new);
+	struct ll_node *new;
+	struct ll_node *temp;
+	new = (struct ll_node *) malloc (sizeof *new);
 	new->key = v;
 	new->next = NULL;
 
@@ -72,9 +72,9 @@ void ll_insert_end(struct node *head, int v)
 }
 	
 // index: if exists, -1: if doesn't exists
-int ll_search(struct node *head, int v)
+int ll_search(struct ll_node *head, int v)
 {
-	struct node *tmp = head;
+	struct ll_node *tmp = head;
 	int index = 0;
 	while (tmp->next != NULL) {
 		if (tmp->key == v)
@@ -86,15 +86,15 @@ int ll_search(struct node *head, int v)
 }
 
 // key: success, -1: failure, key not found
-int ll_delete(struct node *head, int n)
+int ll_delete(struct ll_node *head, int n)
 {
 	// Check if linked list is empty
 	if (head->next == NULL)
 		return -1;
 
 	int key = 0;
-	struct node *tmp = head->next;
-	struct node *tlag = head;
+	struct ll_node *tmp = head->next;
+	struct ll_node *tlag = head;
 
 	while (tmp->next != NULL) {
 		if (tmp->key == n) {
@@ -119,9 +119,9 @@ int ll_delete(struct node *head, int n)
 }
 
 // Convert link list to array
-void ll_to_a(struct node *head, int *a, int size)
+void ll_to_a(struct ll_node *head, int *a, int size)
 {
-	struct node *tmp;
+	struct ll_node *tmp;
 	tmp = head->next;
 	int i = 0;
 	while (tmp != NULL && i < size) {

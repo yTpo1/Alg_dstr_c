@@ -1,20 +1,20 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include "linked_list.h"
-#include "node.h"
+#include "ll_node.h"
 
-struct node *sll_init()
+struct ll_node *sll_init()
 {
-	struct node *head = ll_init();
+	struct ll_node *head = ll_init();
 	return head;
 }
 
-void sll_push(struct node *head, int v)
+void sll_push(struct ll_node *head, int v)
 {
 	ll_insert_front(head, v);
 }
 
 // key:success, -1:failure, key not found
-int sll_pop(struct node *head)
+int sll_pop(struct ll_node *head)
 {
 	if (head == NULL)
 		return -1;
@@ -23,7 +23,7 @@ int sll_pop(struct node *head)
 	return ll_delete(head, head->next->key);
 }
 
-void sll_free(struct node *head)
+void sll_free(struct ll_node *head)
 {
 	ll_free(head);
 }

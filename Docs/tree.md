@@ -135,6 +135,45 @@ During traversal use stack to record each element. After convert it to array.
 
 ## Representing tree as an Array <a name="asanarray"></a>
 
+## Red Black Trees
+Defining red and black is done with boolean values.
+
+Rules:
+* Every node is red or black 
+* Root is always black
+* New insertions are always red
+* Every path from root to leaf has the same number of **Black** nodes
+* No path can have two censecutive RED nodes (but can have consecutive black nodes)
+* Nulls are black
+
+Rebalance:
+* Black aunt - rotate
+* Red aunt - colorflip
+
+After rotation:
+	Black
+      /        \
+    Red		Red
+
+After colorflip:
+	Red
+      /      \
+    Black    Black
+
+In the rotation and colorfliping participate 3 nodes: child, parent and aunt.
+
+Balancing:
+* If the imbalance is in the right child, right subtree, then we do a left rotation.
+* If the imbalance is in the right child, left subtree, then we do a right-left rotation.
+* If the imbalance is in the left childs, right subtree, then we do a left-right rotation.
+* If the imbalance is in the left childs, 
+
+The red black tree is a mechanism for balancing a tree by using the labels to tell us when to rebalance. Rather than using difference in height like the AVL tree does.
+The red black tree relies on having a boolean that we've set as either red or black and if there's a violation in the properties (there are six rules we have to look at) then we rebalance the tree.
+
+* https://www.youtube.com/watch?v=nMExd4DthdA
+* https://www.youtube.com/watch?v=v6eDztNiJwo
+
 ## Sources
 * <a name="dstr_a_wengrow_j"></a>[book] A Common-Sense Guide to Data Structures and Algorithms - Jay Wengrow (2017)
 * <a name="link1" href="https://www.studytonight.com/data-structures/binary-search-tree">link1</a>

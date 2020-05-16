@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "binary_tree.h"
 #include "stack_ll.h"
 #include "queue.h"
@@ -5,10 +7,12 @@
 static struct tree_node *insert(struct tree_node *node, int v);
 static int search(struct tree_node *node, int v);
 static struct tree_node *lift(struct tree_node *node, struct tree_node *node_to_del);
-static struct tree_node *delete(int key, struct tree_node *node);
-//static void traverse_to_a(struct tree_node *node, int *a, int index);
+static struct tree_node *delete(struct tree_node *node, int key);
+static void preoder_traversal(struct tree_node *node, struct queue *st);
+static void inorder_traversal(struct tree_node *node, struct queue *st);
+static void postorder_traversal(struct tree_node *node, struct queue *st);
 
-// to rename to bt_node_init
+
 struct tree_node *bt_init(int v)
 {
 	struct tree_node *root;
@@ -23,8 +27,6 @@ struct tree_node *insert(struct tree_node *node, int v)
 {
     if (v > node->value) {
         if (node->right == NULL) {
-            //node->right = (struct tree_node *) malloc(sizeof(*node));
-            //node->right->value = v;
             node->right = bt_init(v);
             return node;
         }
@@ -32,8 +34,6 @@ struct tree_node *insert(struct tree_node *node, int v)
             insert(node->right, v);
     } else {
         if (node->left == NULL) {
-            //node->left = (struct tree_node *) malloc(sizeof(*node));
-            //node->left->value = v;
 	    node->left = bt_init(v);
             return node;
         }
@@ -74,16 +74,16 @@ int bt_search(struct tree_node *root, int v)
 	return search(root, v);
 }
 
-struct tree_node *delete(int key, struct tree_node *node)
+struct tree_node *delete(struct tree_node *node, int key)
 {
 	if (node == NULL)
 		return NULL;
 	else if (key < node->value) {
-		node->left = delete(key, node->left);
+		node->left = delete(node->left, key);
 		return node;
 	}
 	else if (key > node->value) {
-		node->right = delete(key, node->right);
+		node->right = delete(node->right, key);
 		return node;
 	}
 	else if (node->value == key) {
@@ -104,7 +104,7 @@ struct tree_node *delete(int key, struct tree_node *node)
 	}
 }
 
-struct tree_node *lift(struct tree_node *node, struct tree_node *node_to_del)
+static struct tree_node *lift(struct tree_node *node, struct tree_node *node_to_del)
 {
 	if (node->left != NULL) {
 		node->left = lift(node->left, node_to_del);
@@ -119,7 +119,7 @@ struct tree_node *lift(struct tree_node *node, struct tree_node *node_to_del)
 
 void bt_delete_node(struct tree_node *root, int key)
 {
-    delete(key, root);
+    delete(root, key);
 }
 
 void bt_delete_tree(struct tree_node *node)
@@ -131,7 +131,7 @@ void bt_delete_tree(struct tree_node *node)
 	free(node);
 }
 
-void preoder_traversal(struct tree_node *node, struct queue *st)
+static void preoder_traversal(struct tree_node *node, struct queue *st)
 {
 	if (node != NULL) {
 		q_enqueue(st, node->value);
@@ -140,7 +140,7 @@ void preoder_traversal(struct tree_node *node, struct queue *st)
 	}
 }
 
-void inorder_traversal(struct tree_node *node, struct queue *st)
+static void inorder_traversal(struct tree_node *node, struct queue *st)
 {
     if (node != NULL) {
         inorder_traversal(node->left, st);
@@ -149,7 +149,7 @@ void inorder_traversal(struct tree_node *node, struct queue *st)
     }
 }
 
-void postorder_traversal(struct tree_node *node, struct queue *st)
+static void postorder_traversal(struct tree_node *node, struct queue *st)
 {
 	if (node != NULL) {
 		postorder_traversal(node->left, st);
@@ -183,4 +183,20 @@ void bt_traverse(struct tree_node *root, int trav_type, int *trav_a, int a_size)
 			trav_a[i++] = tmp;
 	}
 	q_free(q);
+}
+
+int bt_min(struct tree_node *root)
+{
+	if (root->left != NULL)
+		return bt_min(root->left);
+	else 
+		return root->value;
+}
+
+int bt_max(struct tree_node *root)
+{
+	if (root->right != NULL)
+		return bt_max(root->right);
+	else
+		return root->value;	
 }

@@ -163,6 +163,10 @@ After colorflip:
 In the rotation and colorfliping participate 3 nodes: child, parent and aunt.
 
 Balancing:
+
+* z's uncle y is black and z is a right child - left rotation
+* z's uncle y is black and z is a left child - colorflip, then right rotation
+
 * If the imbalance is in the right child, right subtree, then we do a left rotation.
 * If the imbalance is in the right child, left subtree, then we do a right-left rotation.
 * If the imbalance is in the left childs, right subtree, then we do a left-right rotation.

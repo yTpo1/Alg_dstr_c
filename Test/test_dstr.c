@@ -12,10 +12,30 @@
 #include "../Dstr/graph.h"
 #include "../Dstr/heap.h"
 #include "../Dstr/priority_queue.h"
+#include "../Dstr/red_black_trees.h"
 
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
+void test_rbt()
+{
+	int exp_inorder[10] = {1,2,4,5,7,8,11,14,15};
+	int act_inorder[10];
+	rb_tree *t = rbt_init();
+	rbt_insert(t,11); 
+	rbt_insert(t,2); 
+	rbt_insert(t,14); 
+	rbt_insert(t,1); 
+	rbt_insert(t,15); 
+	rbt_insert(t,7);
+	rbt_insert(t,5);
+	rbt_insert(t,8);
+	rbt_insert(t,4);
+	assert_int_eq(rb_size(t, t->root), 9, "rb size");
+	rb_inorder_traversal(t, act_inorder);
+	assert_int_array_eq(act_inorder, exp_inorder, 10, "red-black tree inorder trav");
+}
 
 void test_priority_queue()
 {
@@ -28,7 +48,7 @@ void test_priority_queue()
 	pq_insert(h, 2);
 	pq_insert(h, 16);
 	pq_insert(h, 9);
-	pq_insert(h, 10);
+	pq_insert(h, 10);;
 	pq_insert(h, 14);
 	pq_insert(h, 8);
 	pq_insert(h, 7);
@@ -364,32 +384,78 @@ void test_circular_linked_list()
 	cll_free(head);
 }
 
+void test_queue_2()
+{
+	// test where head stays 0 but tail grows
+	int q_len = 3;
+	struct queue *q = q_init(q_len);
+	q_enqueue(q, 1);
+	q_enqueue(q, 2);
+	q_enqueue(q, 3);
+	q_enqueue(q, 4);
+	assert_int_eq(q_size(q), 3, "q size");
+	q_enqueue(q, 5);
+	assert_int_eq(q_size(q), 3, "q size");
+	
+	q_free(q);
+}
+
+void test_queue_3()
+{
+	// test if indexes are going in a circle
+	int q_len = 3;
+	struct queue *q = q_init(q_len);
+	q_enqueue(q, 1);
+	q_enqueue(q, 2);
+	q_enqueue(q, 3);
+	assert_int_eq(q_first(q), 3, "q first");
+	assert_int_eq(q_dequeue(q), 1, "q dequeue");
+	q_enqueue(q, 4);
+	assert_int_eq(q_first(q), 4, "q first");
+	assert_int_eq(q_dequeue(q), 2, "q dequeue");
+	q_enqueue(q, 5);
+	assert_int_eq(q_first(q), 5, "q first");
+	assert_int_eq(q_dequeue(q), 3, "q dequeue");
+	q_enqueue(q, 6);
+	assert_int_eq(q_first(q), 6, "q first");
+	assert_int_eq(q_dequeue(q), 4, "q dequeue");
+	q_enqueue(q, 7);
+	assert_int_eq(q_first(q), 7, "q first");
+	assert_int_eq(q_dequeue(q), 5, "q dequeue");
+	q_free(q);
+}
+
 void test_queue()
 {
-	struct queue *q;
-	q = q_init();
+	int q_len = 10;
+	struct queue *q = q_init(q_len);
 	assert_int_eq(q_size(q), 0, "q size");
 	assert_int_eq(q_isempty(q), 1, "q isempty");
+
 	q_enqueue(q, 6);
 	assert_int_eq(q_size(q), 1, "q size");
 	assert_int_eq(q_first(q), 6, "q first");
 	assert_int_eq(q_isempty(q), 0, "q isempty");
 
 	q_enqueue(q, 3);
+	assert_int_eq(q_size(q), 2, "q size");
 	assert_int_eq(q_first(q), 3, "q first");
+
 	assert_int_eq(q_dequeue(q), 6, "q dequeue");
 	assert_int_eq(q_size(q), 1, "q size");
+
 	q_enqueue(q, 77);
 	q_enqueue(q, 81);
-	
-	for(int i = 0; i < QUEUESIZE * 2; i++){
-		q_enqueue(q, i);
-		q_dequeue(q);
-	}
-	assert_int_eq(q_isempty(q), 0, "q isempty");
 	assert_int_eq(q_size(q), 3, "q size");
-	assert_int_eq(q_first(q), ((QUEUESIZE * 2) - 1), "q first");
-	assert_int_eq(q_dequeue(q), ((QUEUESIZE * 2) - 3), "q dequeue");
+	
+	q_enqueue(q, 77);
+	q_enqueue(q, 81);
+	q_enqueue(q, 77);
+	q_enqueue(q, 81);
+	q_enqueue(q, 77);
+	q_enqueue(q, 81);
+	q_enqueue(q, 77);
+	assert_int_eq(q_size(q), 10, "q size");
 
 	q_free(q);
 }
@@ -418,6 +484,8 @@ void test_btree()
 	assert_int_eq(bt_search(root, 4), 1, "bt insert-search");
 	assert_int_eq(bt_search(root, 13), 1, "bt insert-search");
 	assert_int_eq(bt_search(root, 73), 0, "bt insert-search");
+
+	assert_int_eq(bt_size(root), 5, "binary tree size");
 
 	bt_traverse(root, 1, bt_trav, a_size);
 	assert_int_array_eq(bt_preotrav, bt_trav, 5, "Binary Tree - preorder");
@@ -450,8 +518,10 @@ void run_data_structure_tests()
 	//test_circular_linked_list();
 	//test_stack_array();
 	//test_stack_ll();
-	//test_queue();
-	test_btree();
+	test_queue();
+	test_queue_2();
+	test_queue_3();
+	//test_btree();
 	//test_hashing();
 	//test_hash_table();
 	//test_hash_table_open_addressing();
@@ -462,4 +532,5 @@ void run_data_structure_tests()
 	//test_max_heap();
 	//test_max_heap_build();
 	//test_priority_queue();
+	//test_rbt();
 }

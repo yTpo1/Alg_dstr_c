@@ -14,4 +14,5 @@ void bt_delete_tree(struct tree_node *node);
 void bt_delete_node(struct tree_node *root, int key);
 int bt_min(struct tree_node *root);
 int bt_max(struct tree_node *root);
+int bt_size(struct tree_node *root);
 #endif

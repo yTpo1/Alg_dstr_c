@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "binary_tree.h"
-#include "stack_ll.h"
 #include "queue.h"
 
 static struct tree_node *insert(struct tree_node *node, int v);
@@ -163,8 +162,7 @@ void bt_traverse(struct tree_node *root, int trav_type, int *trav_a, int a_size)
 {
 	int i = 0, tmp = 0;
 	// Use a queue because if I use stack I'll need to reverse the data
-	struct queue *q;
-	q = q_init();
+	struct queue *q = q_init(a_size);
 
 	if (trav_type == 1)
 		preoder_traversal(root, q);
@@ -199,4 +197,11 @@ int bt_max(struct tree_node *root)
 		return bt_max(root->right);
 	else
 		return root->value;	
+}
+
+int bt_size(struct tree_node *root)
+{
+	if (root == NULL)
+		return 0;
+	return 1 + bt_size(root->right) + bt_size(root->left);
 }

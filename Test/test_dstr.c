@@ -20,21 +20,38 @@
 
 void test_rbt()
 {
-	int exp_inorder[10] = {1,2,4,5,7,8,11,14,15};
-	int act_inorder[10];
-	rb_tree *t = rbt_init();
-	rbt_insert(t,11); 
-	rbt_insert(t,2); 
-	rbt_insert(t,14); 
-	rbt_insert(t,1); 
-	rbt_insert(t,15); 
-	rbt_insert(t,7);
-	rbt_insert(t,5);
-	rbt_insert(t,8);
-	rbt_insert(t,4);
+	int exp_inorder[11] = {1,2,4,5,7,8,11,14,15};
+	int act_inorder[11];
+	rb_tree *t = rb_init();
+	rb_insert(t,11); 
+	rb_insert(t,2); 
+	rb_insert(t,14); 
+	rb_insert(t,1); 
+	rb_insert(t,15); 
+	rb_insert(t,7);
+	rb_insert(t,5);
+	rb_insert(t,8);
+	rb_insert(t,4);
 	assert_int_eq(rb_size(t, t->root), 9, "rb size");
 	rb_inorder_traversal(t, act_inorder);
 	assert_int_array_eq(act_inorder, exp_inorder, 10, "red-black tree inorder trav");
+
+	exp_inorder[2] = 3;
+	exp_inorder[3] = 4;
+	exp_inorder[4] = 5;
+	exp_inorder[5] = 7;
+	exp_inorder[6] = 8;
+	exp_inorder[7] = 11;
+	exp_inorder[8] = 14;
+	exp_inorder[9] = 15;
+
+	act_inorder[10] = 0;
+	rb_insert(t,3);
+	assert_int_eq(rb_size(t, t->root), 10, "rb size");
+	rb_inorder_traversal(t, act_inorder);
+	assert_int_array_eq(act_inorder, exp_inorder, 11, "red-black tree inorder trav");
+
+	rb_free(t, t->root);
 }
 
 void test_priority_queue()
@@ -518,9 +535,9 @@ void run_data_structure_tests()
 	//test_circular_linked_list();
 	//test_stack_array();
 	//test_stack_ll();
-	test_queue();
-	test_queue_2();
-	test_queue_3();
+	//test_queue();
+	//test_queue_2();
+	//test_queue_3();
 	//test_btree();
 	//test_hashing();
 	//test_hash_table();
@@ -532,5 +549,5 @@ void run_data_structure_tests()
 	//test_max_heap();
 	//test_max_heap_build();
 	//test_priority_queue();
-	//test_rbt();
+	test_rbt();
 }

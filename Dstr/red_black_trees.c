@@ -6,12 +6,12 @@
 #define BLACK 0
 #define RED 1
 
-rb_tree *rbt_init(void)
+rb_tree *rb_init(void)
 {
 	rb_tree *tree = (rb_tree *) malloc(sizeof(rb_tree));
 	tree->root = NULL;
 
-	tree->nullnode = (rbt_node *) malloc(sizeof(rbt_node));
+	tree->nullnode = (rb_node *) malloc(sizeof(rb_node));
 	tree->nullnode->right = NULL;
 	tree->nullnode->left = NULL;
 	tree->nullnode->parent = NULL;
@@ -21,21 +21,16 @@ rb_tree *rbt_init(void)
 	return tree;
 }
 
-static rbt_node *create_node(rb_tree *t, int v)
+static rb_node *create_node(rb_tree *t, int v)
 {
-	rbt_node *node = (rbt_node *) malloc(sizeof(rbt_node));
-	node->parent = NULL;
-	//node->left = NULL;
+	rb_node *node = (rb_node *) malloc(sizeof(rb_node));
+	node->parent = t->nullnode;
 	node->left = t->nullnode;
-	//node->right = NULL;
 	node->right = t->nullnode;
 	node->v = v;
 	node->color = RED;
 	return node;
 }
-
-//void decend_insert_iter(rb_tree *t, int v){}
-//void decend_insert_rec(rb_tree *t, int v){}
 
 /* Left rotation ->
  * Right rotation <-
@@ -47,9 +42,9 @@ static rbt_node *create_node(rb_tree *t, int v)
  *       /  \          / \
  *      B    C        A   B
  */
-static void left_rotate(rb_tree *t, rbt_node *x)
+static void left_rotate(rb_tree *t, rb_node *x)
 {
-	rbt_node *y = x->right;		
+	rb_node *y = x->right;		
 	x->right = y->left;		// x->r = B
 	if (y->left != t->nullnode)		// if (B != NULL)
 		y->left->parent = x;    // B->p = x
@@ -64,9 +59,9 @@ static void left_rotate(rb_tree *t, rbt_node *x)
 	x->parent = y;
 }
 
-static void right_rotate(rb_tree *t, rbt_node *y)
+static void right_rotate(rb_tree *t, rb_node *y)
 {
-	rbt_node *x = y->left;		
+	rb_node *x = y->left;		
 	y->left = x->right;		// y->l = B
 	if (x->right != t->nullnode)		// if (B != NULL)
 		x->right->parent = y;    // B->p = y
@@ -81,7 +76,7 @@ static void right_rotate(rb_tree *t, rbt_node *y)
 	y->parent = x;
 }
 
-static void colorflip(rbt_node *z, rbt_node *y)
+static void colorflip(rb_node *z, rb_node *y)
 {
 	//colour-flip
 	z->parent->color = BLACK;
@@ -117,9 +112,9 @@ static void colorflip(rbt_node *z, rbt_node *y)
  *  E   F
  *
  */
-static void rbt_insert_fixup(rb_tree *t, rbt_node *z)
+static void rb_insert_fixup(rb_tree *t, rb_node *z)
 {
-	rbt_node *y = NULL;
+	rb_node *y = NULL;
 	while (z->parent->color == 1) {
 		if (z->parent == z->parent->parent->left) { //if (A == B->left)
 			y = z->parent->parent->right; // y
@@ -156,11 +151,11 @@ static void rbt_insert_fixup(rb_tree *t, rbt_node *z)
 	t->root->color = BLACK;
 }
 
-void rbt_insert(rb_tree *t, int v)
+void rb_insert(rb_tree *t, int v)
 {
-	rbt_node *new = create_node(t, v);
-	rbt_node *next = t->root;
-	rbt_node *n = NULL;
+	rb_node *new = create_node(t, v);
+	rb_node *next = t->root;
+	rb_node *n = NULL;
 
 	while (next != NULL && next != t->nullnode) {
 		n = next;
@@ -181,10 +176,10 @@ void rbt_insert(rb_tree *t, int v)
 	else
 		n->left = new;
 
-	rbt_insert_fixup(t, new);
+	rb_insert_fixup(t, new);
 }
 
-int rb_size(rb_tree *t, rbt_node *root)
+int rb_size(rb_tree *t, rb_node *root)
 {
 	if (root == NULL || root == t->nullnode)
 		return 0;
@@ -192,15 +187,13 @@ int rb_size(rb_tree *t, rbt_node *root)
 	
 }
 
-static void inorder_traversal(rb_tree *t, rbt_node *root, struct queue *q)
+static void inorder_traversal(rb_tree *t, rb_node *root, struct queue *q)
 {
-	if (root != NULL && root != t->nullnode) {
-	//	return;
-		inorder_traversal(t, root->left, q);
-		q_enqueue(q, root->v);
-		printf("root->value = %d q_size:%d tail:%d head:%d\n", root->v, q_size(q), q->i_tail, q->i_head);
-		inorder_traversal(t, root->right, q);
-	}
+	if (root == NULL || root == t->nullnode) 
+		return;
+	inorder_traversal(t, root->left, q);
+	q_enqueue(q, root->v);
+	inorder_traversal(t, root->right, q);
 }
 
 
@@ -209,10 +202,25 @@ void rb_inorder_traversal(rb_tree *t, int *a)
 	int i = 0;
 	struct queue *q = q_init(rb_size(t, t->root));
 	inorder_traversal(t, t->root, q);
-	printf("qsize %d\n", q_size(q));
-	while (!q_isempty(q)) {
+	while (!q_isempty(q))
 		a[i++] = q_dequeue(q);
-		//printf("a[i] = %d\n", a[i - 1]);
-	}
 	q_free(q);
+}
+
+void rb_free(rb_tree *t, rb_node *r)
+{
+	int last = 0;
+	if (r == NULL || r == t->nullnode)
+		return;
+	rb_free(t, r->left);
+	rb_free(t, r->right);
+	if (r == t->root) {
+		free(t->nullnode);
+		t->nullnode = NULL;
+		last = 1;
+	}
+	free(r);
+	r = NULL;
+	if (last)
+		free(t);
 }

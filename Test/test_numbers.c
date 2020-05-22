@@ -1,6 +1,37 @@
+#include <stdlib.h>
 #include "test_numbers.h"
+#include "../Dstr/stack_ll.h"
 
-void test_horner()
+void test_matrix_mult(void)
+{
+	int **a = (int **) malloc(2 * sizeof(int *));
+	int **b = (int **) malloc(2 * sizeof(int *));
+	for (int i = 0; i <= 1; i++) {
+		a[i] = (int *) malloc(2 *sizeof(int)); 
+		b[i] = (int *) malloc(2 *sizeof(int)); 
+	}
+	int **c;
+	int exp_answ[2][2] = {{4, 4}, {10,8}};
+	a[0][0] = 1; a[0][1] = 2; a[1][0] = 3; a[1][1] = 4;
+	b[0][0] = 2; b[0][1] = 0; b[1][0] = 1; b[1][1] = 2;
+	c = matrix_mult(a, b);
+
+	assert_int_eq(c[0][0], exp_answ[0][0], "matrix mult");
+	assert_int_eq(c[0][1], exp_answ[0][1], "matrix mult");
+	assert_int_eq(c[1][0], exp_answ[1][0], "matrix mult");
+	assert_int_eq(c[1][1], exp_answ[1][1], "matrix mult");
+
+	for (int i = 0; i <= 1; i++) {
+		free(a[i]);
+		free(b[i]);
+		free(c[i]);
+	}
+	free(a);
+	free(b);
+	free(c);
+}
+
+void test_horner(void)
 {
 	// 2x^3-6x^2+2x-1
 	int poly1[4] = {2,-6, 2, -1};
@@ -9,16 +40,16 @@ void test_horner()
 	assert_int_eq(horner(poly2, 4, 3), 5, "horner");
 }
 
-void test_posfix_equation()
+void test_posfix_equation(void)
 {
-	struct node *head;
+	struct ll_node *head;
 	char s[9] = "2 3 5 + *";
 	head = sll_init();
 	assert_int_eq(solve_equation_posfix(head, s), 16, "posfix equation using stack");
 	sll_free(head);
 }
 
-void test_char_to_int()
+void test_char_to_int(void)
 {
 	assert_int_eq(char_to_int('3'), 3, "char to int");
 	assert_int_eq(char_to_int('9'), 9, "char to int");
@@ -106,4 +137,5 @@ void run_number_tests()
 	test_char_to_int();
 	test_posfix_equation();
 	//test_horner();
+	test_matrix_mult();
 }

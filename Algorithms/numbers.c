@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "numbers.h"
+
+// O(n^3)
+int **matrix_mult(int **a, int **b)
+{
+	int **c = (int **) malloc(2 * sizeof(int *));
+	for (int i = 0; i <= 1; i++)
+		c[i] = (int *) malloc(2 *sizeof(int)); 
+
+	for (int i = 0; i <= 1; i++)
+		for (int j = 0; j <= 1; j++)
+			for (int k = 0; k <= 1; k++)
+				c[i][j] += a[i][k] * b[k][j];
+	return c;
+}
 
 // Time: O(2^n). Space: O(n)
 int fibonacci_r(int n)

@@ -20,5 +20,6 @@ int fibonacci(int lim);
 int fibonacci_r(int lim);
 int fibonacci_i(int lim);
 int horner(int poly[], int len, int x);
+int **matrix_mult(int **a, int **b);
 
 #endif

@@ -2,7 +2,7 @@
 #include "linked_list.h"
 #include "ll_node.h"
 
-struct ll_node *sll_init()
+struct ll_node *sll_init(void)
 {
 	struct ll_node *head = ll_init();
 	return head;

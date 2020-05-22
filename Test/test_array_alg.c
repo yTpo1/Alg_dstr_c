@@ -1,7 +1,20 @@
+#include <stdlib.h>
 #include "../lib_unittest/myunittest.h"
 #include "../Algorithms/array_questions.h"
 #define SIZEMAX 10
 
+void test_max_sub_array()
+{
+	struct tuple *t = NULL;
+	int a[8] = {6, 8, -4, 10, 11, -10, 5, 2};
+
+	t = max_sub_array_dnq(a, 0, 7);
+	assert_int_eq(31, t->s, "max-sub-arr sum");
+	assert_int_eq(0, t->li, "max-sub-arr start index");
+	assert_int_eq(4, t->ri, "max-sub-arr end index");
+	free(t);
+}
+/* wtf this is wrong
 void test_max_sub_array()
 {
 	int cost[17] = {100, 113, 110, 85, 105, 102, 86, 63, 81, 101, 94, 106, 101, 79, 94, 90, 97};
@@ -19,6 +32,7 @@ void test_max_sub_array()
 	//assert_int_eq(j, 4, "max_sub_array");
 	//assert_int_eq(cost[j] - cost[i], , "max_sub_array");
 }
+*/
 
 void test_binary_search()
 {

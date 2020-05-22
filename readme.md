@@ -18,6 +18,7 @@ Two-dimentsional arrays correspond to matrices. [src](#b-alg-c-segw)
 * Find Max Min "find_max_min("
 Search:
 * Binary Search
+* Max sub array
 
 ## Sorting Algorithms:
 [Sorting](Docs/sorting.md)

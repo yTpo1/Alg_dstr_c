@@ -7,8 +7,9 @@
 #include "Test/test_numbers.h"
 #include "Test/test_dstr.h"
 #include "Test/test_cryptography.h"
+#include "Test/test_array_alg.h"
 
-#define SIZEMAX 1000
+#define SIZEMAX 100
 
 void reset_dummy_array(int *a);
 
@@ -53,73 +54,32 @@ void reset_dummy_array(int *a){
         a[i] = tmp[i];
 }
 
-void run_array_tests(){
-    int actual_size = 10;
-    int unsorted_a[SIZEMAX];
-    int sorted_answer[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
-
-    char s1[SIZEMAX] = "hey boss";
-    char s2[SIZEMAX] = " behossy";
-    insertion_sort_char(s1, 9);
-    assert_str_eq(s2, s1, "insertion_sort_char");
-
-    assert_int_eq(1, binary_search(sorted_answer, 2, 0, 9), "binary_seach");
-    assert_int_eq(1, binary_search(sorted_answer, 10, 0, 10), "binary_seach");
-    assert_int_eq(0, binary_search(sorted_answer, 15, 0, 10), "binary_seach");
-   
-    // Unittest Insertion Sort
-    reset_dummy_array(unsorted_a);
-    insertion_sort(unsorted_a, actual_size);
-    assert_int_array_eq(unsorted_a, sorted_answer, actual_size, "Insertion Sort");
-    /*t_iarray_eq(unsorted_a, sorted_answer, "Insertion Sort");*/
-
-    // Unittest straight selection
-    reset_dummy_array(unsorted_a);
-    straignt_selection(unsorted_a, actual_size);
-    assert_int_array_eq(unsorted_a, sorted_answer, actual_size, "Straight Selection");
-
-    // Unittest Quick Sort
-    reset_dummy_array(unsorted_a);
-    quick_sort(unsorted_a, 0, 9);
-    assert_int_array_eq(unsorted_a, sorted_answer, actual_size, "Quick Sort");
-
-    // Unittest Merge Sort 
-    reset_dummy_array(unsorted_a);
-    merge_sort(unsorted_a, 0, 9);
-    assert_int_array_eq(unsorted_a, sorted_answer, actual_size, "Merge Sort");
-
-    // Unittest bubble_sort
-    reset_dummy_array(unsorted_a);
-    bubble_sort(unsorted_a, actual_size);
-    assert_int_array_eq(unsorted_a, sorted_answer, actual_size, "Bubble sort");
-
-    // Unittest Heap sort
-    //reset_dummy_array(unsorted_a);
-    //heap_sort(unsorted_a, actual_size);
-    //test_int_array_equal(unsorted_a, sorted_answer, actual_size);
-    
-    // Unittest Find Median
-    // !Infinite loop
-    //reset_dummy_array(unsorted_a);
-    //int m = get_median(unsorted_a, actual_size);
-    //assert_int_eq(5, m, "Find Median"); 
-
-    // Unittest min heapify
-    /*reset_dummy_array(unsorted_a);*/
-    /*min_heapify(unsorted_a, actual_size);*/
-    /*int min_heapity = {1,*/
-}
-
-
-
 int main(int argc, char *argv[])
 {
-	//run_array_tests();
-	//run_str_tests();
-	run_data_structure_tests();
-	//run_number_tests();
-	//run_test_cryptography();
+	int all = 0;
 
+	if (argc == 2 && strcmp(argv[argc - 1], "-h") == 0) {
+		printf("Options: array dstr str num crypto\n");
+		return 0;
+	}
+
+	if(argc == 1)
+		all = 1;
+	while (argc > 1 || all) {
+		if (strcmp(argv[argc - 1], "array") == 0 || all)
+			run_array_tests();
+		if (strcmp(argv[argc - 1], "dstr") == 0 || all)
+			run_data_structure_tests();
+		if (strcmp(argv[argc - 1], "crypto") == 0 || all)
+			run_test_cryptography();
+		if (strcmp(argv[argc - 1], "num") == 0 || all)
+			run_number_tests();
+		if (strcmp(argv[argc - 1], "str") == 0 || all)
+			run_str_tests();
+		if (all)
+			all--;
+		argc--;
+	}		
 	print_test_status();
 	return 0;
 }

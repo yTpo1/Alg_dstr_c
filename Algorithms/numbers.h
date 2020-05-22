@@ -1,3 +1,6 @@
+#ifndef NUMBERS_H
+#define NUMBERS_H
+
 #include "../Dstr/stack_ll.h"
 
 struct fraction {
@@ -12,8 +15,10 @@ void b_to_d(int nd, char *binary);
 void prime_numers(int n, int a[]);
 int isprime_trial_division(int n);
 int char_to_int(char c);
-int solve_equation_posfix(struct node *head, char *s);
+int solve_equation_posfix(struct ll_node *head, char *s);
 int fibonacci(int lim);
 int fibonacci_r(int lim);
 int fibonacci_i(int lim);
 int horner(int poly[], int len, int x);
+
+#endif

@@ -152,7 +152,7 @@ int char_to_int(char c)
 	return (int) c - 48;
 }
 
-int solve_equation_posfix(struct node *head, char *s)
+int solve_equation_posfix(struct ll_node *head, char *s)
 {
 	for(int i = 0; s[i] != '\0'; i++){
 		if(s[i] == '+')

@@ -13,7 +13,7 @@ DSTRSRC = $(addprefix Dstr/, binary_tree.c circ_link_list.c linked_list.c \
 	  graph.c heap.c priority_queue.c red_black_trees.c)
 CRYPTOGRAPHY = $(addprefix Cryptography/, caesar.c polyalphabetic.c)
 UNITSRC = lib_unittest/myunittest.c
-TESTS = $(addprefix Test/, test_numbers.c test_dstr.c test_cryptography.c)
+TESTS = $(addprefix Test/, test_numbers.c test_dstr.c test_cryptography.c test_array_alg.c)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -22,9 +22,6 @@ all: $(MAIN)
 
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LIBS)
-
-#.c.o:
-#	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 .PHONY: clean
 

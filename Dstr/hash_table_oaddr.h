@@ -1,3 +1,6 @@
+#ifndef HASH_TABLE_OADDR_H
+#define HASH_TABLE_OADDR_H
+
 // Hash Table Open Addressing
 struct htoa_item {
 	char *key;
@@ -23,3 +26,5 @@ static void resize(struct htoa *ht, int new_aprox_size);
 static void rehash(struct htoa *ht, struct htoa *nht);
 static int find_closest_prime(int n);
 static void insert(struct htoa *ht, char *key, int klen, char *value, int vlen);
+
+#endif

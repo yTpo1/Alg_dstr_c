@@ -1,11 +1,36 @@
+#include <stdlib.h>
 #include "helper_func.h"
 //#include "array_questions.h"
-#include <stdio.h>
 
 int partition(int a[], int l, int r);
 void merge(int a[], int l, int m, int r);
 // shit elements for heap sort
 void sift(int *a, int l, int r);
+
+/* Max sub array */
+// bruteforce - O(n^2)
+void max_sub_array(int cost[], int asize, int *ai, int *aj)
+{
+	int sum = 0;
+	for (int i = 0; i < asize; i++)
+		for (int j = i + 1; j < asize; j++) {
+			if (cost[j] - cost[i] > sum) {
+				sum = cost[j] - cost[i];
+				*ai = i;
+				*aj = j;
+			}
+		}
+}
+
+/* Max sub array */
+// devide and conquer
+int max_sub_array_dnq_rec(int a[], int l, int h)
+{
+	if (l == h)
+		return a[h];
+	if (l > h)
+		return max_sub_array_dnq_rec(a, l+1, h-1);
+}
 
 /* Sorting algorithm */
 void quick_sort(int a[], int l, int r){
@@ -69,7 +94,7 @@ void insertion_sort(int a[], int size){
             if(a[j]<a[j-1])
                 swap_var_int_array(a, j, j-1);
 }
-void straignt_selection(int* a, int size){
+void straignt_selection_sort(int* a, int size){
     for(int i=0; i<size; i++){
         int min = a[i];
         int min_indx = i;

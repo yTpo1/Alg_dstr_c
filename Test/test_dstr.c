@@ -540,14 +540,14 @@ void run_data_structure_tests()
 	//test_queue_3();
 	//test_btree();
 	//test_hashing();
-	//test_hash_table();
-	//test_hash_table_open_addressing();
-	//test_hashtable_openaddr_resizing();
+	test_hash_table();
+	test_hash_table_open_addressing();
+	test_hashtable_openaddr_resizing();
 	//test_graph();
 	//test_graph_notcyclic();
 	//test_heap();
 	//test_max_heap();
 	//test_max_heap_build();
 	//test_priority_queue();
-	test_rbt();
+	//test_rbt();
 }

@@ -1,11 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "helper_func.h"
 #include "array_questions.h"
 
 static struct tuple *max_crossing_subarray(int *a, int l, int m, int h);
 static int partition(int a[], int l, int r);
+static int partition_rand(int a[], int l, int r);
 static void merge(int a[], int l, int m, int r);
+static void print_int_array(int a[], int size)
+{
+    for(int i=0; i<size; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+}
+static void swap(int *x, int *y)
+{
+	int tmp = *x;
+	*x = *y;
+	*y = tmp;
+}
+static void swapchar(char *x, char *y)
+{
+	char tmp = *x;
+	*x = *y;
+	*y = tmp;
+}
+
+
 // shit elements for heap sort
 //static void sift(int *a, int l, int r);
 
@@ -88,24 +108,42 @@ struct tuple *max_sub_array_dnq(int a[], int l, int h)
 	}
 }
 
+void quick_sort_rand(int a[], int l, int r)
+{
+	if (l < r) {
+		int p = partition_rand(a, l, r);
+		quick_sort_rand(a, l, p-1);
+		quick_sort_rand(a, p+1, r);
+	}
+}
+
+static int partition_rand(int a[], int l, int r)
+{
+	int irand = l + random() % (r + l + 1); //
+	swap(&a[irand], &a[r]);
+	return partition(a, l, r);
+}
+
+
 /* Sorting algorithm */
 void quick_sort(int a[], int l, int r)
 {
-    int p=0;
-    if(l<r){
+    int p = 0;
+    if (l < r) {
         p = partition(a, l, r);
         quick_sort(a, l, p-1);
         quick_sort(a, p+1, r);
     }
 }
 
-static int partition(int a[], int l, int r){
+static int partition(int a[], int l, int r)
+{
     int pivot = a[r];
     int j = l-1;
-    for(int i = l; i<r; i++)
+    for(int i = l; i < r; i++)
         if(pivot > a[i])
-            swap_var_int_array(a, i, ++j);
-    swap_var_int_array(a, j+1, r);
+            swap(&a[i], &a[++j]);
+    swap(&a[j+1], &a[r]);
     return j+1;
 }
 
@@ -153,7 +191,7 @@ void insertion_sort(int a[], int size){
     for(int i=0; i<size;i++)
         for(int j=i; j>0; j--)
             if(a[j]<a[j-1])
-                swap_var_int_array(a, j, j-1);
+		swap(&a[j], &a[j-1]);
 }
 void straignt_selection_sort(int* a, int size){
     for(int i=0; i<size; i++){
@@ -165,7 +203,7 @@ void straignt_selection_sort(int* a, int size){
                 min_indx = j;
             }
         }
-        swap_var_int_array(a, i, min_indx);
+	swap(&a[i], &a[min_indx]);
     }
 }
 // sorting by Straight Exchange
@@ -173,7 +211,7 @@ void bubble_sort(int *a, int size){
     for(int i=0; i<size; i++){
         for(int j=size-1; j>i; j--){
             if(a[j-1]>a[j])
-                swap_var_int_array(a, j, j-1);
+		swap(&a[j], &a[j-1]);
         }
     }
 }
@@ -202,10 +240,11 @@ void straignt_selection(int* a, int size){
 }
 */
 void insertion_sort_char(char s[], int size){
-    for(int i = 1; i<size; i++)
-        for(int j = i-1; j>0 && s[j-1]>s[j]; j--)
-            swap_var_char_array(s, j, j-1);
+	for(int i = 1; i<size; i++)
+		for(int j = i-1; j>0 && s[j-1]>s[j]; j--)
+			swapchar(&s[j], &s[j-1]);
 }
+
 int binary_search(int a[], int x, int l, int r){
     if(l<=r){
         int mid = l + (r-l)/2;
@@ -284,7 +323,7 @@ int get_median(int *a, int size){
             while(x<a[j])
                 j--;
             if(i<=j)
-                swap_var_int_array(a, i++, j--);
+		swap(&a[i++], &a[j--]);
         }while(i>j);
         if(j<k)
             l=i;
@@ -293,4 +332,20 @@ int get_median(int *a, int size){
     }
     return a[k];
 }
-        
+
+/* Quickselect is a selection algorithm to find the i-th smallest element in an unordered list. It is related to the quick sort sorting algorithm. */
+int select_rand(int a[], int p, int r, int i)
+{
+	if (p == r)
+		return a[p];
+	if (i == 0)
+		return -1;
+	int q = partition_rand(a, p, r);
+	int k = q - p + 1;
+	if (i == k)
+		return a[q];
+	else if (i < k)
+		return select_rand(a, p, q - 1, i);
+	else
+		return select_rand(a, q + 1, r, i - k);
+}

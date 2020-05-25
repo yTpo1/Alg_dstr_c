@@ -31,12 +31,14 @@ void assert_int_array_eq(int *a, int *b, int size, char *title)
 {
 	int error = 0;
 	for (int i = 0; i < size; i++) {
+		//printf("ai:%d == bi%d\n",a[i],b[i]);
 		if (a[i] != b[i]) {
 			error = 1;
 			break;
 		}
 	}
-	if (error){
+	//printf("error:%d\n", error);
+	if (error == 1){
 		printf("Test \"%s\": int array comparison. \033[0;31m Failed \033[0m \n", title);
 		//printf("a[%d]:%d != b[%d]:%d\n", i, a[i], i, b[i]);
 		//printf("Original size: %d, traversed i: %d. a[i]!=b[i] %d!=%d\n", size, i, a[i], b[i]);

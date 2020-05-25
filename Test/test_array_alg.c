@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "../lib_unittest/myunittest.h"
 #include "../Algorithms/array_questions.h"
 #define SIZEMAX 10
@@ -44,7 +45,7 @@ void test_binary_search()
 
 void test_bubble_sort()
 {
-    int unsort_a[SIZEMAX];
+    int unsort_a[SIZEMAX] = {4,2,10,7,8,1,3,5,9,6};
     int sort_answ[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
     bubble_sort(unsort_a, SIZEMAX);
     assert_int_array_eq(unsort_a, sort_answ, SIZEMAX, "Bubble sort");
@@ -52,7 +53,7 @@ void test_bubble_sort()
 
 void test_straignt_selection_sort()
 {
-    int unsort_a[SIZEMAX];
+    int unsort_a[SIZEMAX] = {4,2,10,7,8,1,3,5,9,6};
     int sort_answ[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
     
     straignt_selection_sort(unsort_a, SIZEMAX);
@@ -61,7 +62,7 @@ void test_straignt_selection_sort()
 
 void test_insertion_sort()
 {
-    int unsort_a[SIZEMAX];
+    int unsort_a[SIZEMAX] = {4,2,10,7,8,1,3,5,9,6};
     int sort_answ[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
 
     insertion_sort(unsort_a, SIZEMAX);
@@ -70,7 +71,7 @@ void test_insertion_sort()
 
 void test_merge_sort()
 {
-    int unsort_a[SIZEMAX];
+    int unsort_a[SIZEMAX] = {4,2,10,7,8,1,3,5,9,6};
     int sort_answ[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
 
     merge_sort(unsort_a, 0, 9);
@@ -79,12 +80,43 @@ void test_merge_sort()
 
 void test_quick_sort()
 {
-    int unsort_a[SIZEMAX];
+    int unsort_a[SIZEMAX] = {4,2,10,7,8,1,3,5,9,6};
     int sort_answ[SIZEMAX] = {1,2,3,4,5,6,7,8,9,10};
 
     quick_sort(unsort_a, 0, 9);
     assert_int_array_eq(unsort_a, sort_answ, SIZEMAX, "Quick Sort");
 }
+void test_quick_sort2()
+{
+    int unsort_a[8] = {2,8,7,1,3,5,6,4};
+    int sort_answ[8] = {1,2,3,4,5,6,7,8};
+
+    quick_sort(unsort_a, 0, 7);
+    assert_int_array_eq(unsort_a, sort_answ, 8, "Quick Sort 2");
+}
+
+void test_qsortrand()
+{
+    int unsort_a[8] = {2,8,7,1,3,5,6,4};
+    int sort_answ[8] = {1,2,3,4,5,6,7,8};
+
+    quick_sort_rand(unsort_a, 0, 7);
+    assert_int_array_eq(unsort_a, sort_answ, 8, "Quick Sort");
+}
+
+void test_select()
+{
+	int b[6] = {7,10,4,3,20,15};
+	assert_int_eq(select_rand(b, 0, 5, 3), 7, "select");
+	
+	int a[7] = {2,8,5,12,1,10,7};
+	assert_int_eq(select_rand(a, 0, 6, 1), 1, "select");
+	assert_int_eq(select_rand(a, 0, 6, 2), 2, "select");
+	assert_int_eq(select_rand(a, 0, 6, 3), 5, "select");
+	assert_int_eq(select_rand(a, 0, 6, 4), 7, "select");
+	assert_int_eq(select_rand(a, 0, 6, 5), 8, "select");
+}
+
 
 void test_insertion_sort_char()
 {
@@ -112,12 +144,15 @@ void test_insertion_sort_char()
 
 void run_array_tests()
 {
-	test_binary_search();
-	test_bubble_sort();
-	test_straignt_selection_sort();
-	test_insertion_sort();
-	test_merge_sort();
-	test_quick_sort();
-	test_insertion_sort_char();
-	test_max_sub_array();
+	//test_binary_search();
+	//test_bubble_sort();
+	//test_straignt_selection_sort();
+	//test_insertion_sort();
+	//test_merge_sort();
+	//test_quick_sort();
+	//test_quick_sort2();
+	//test_qsortrand();
+	//test_insertion_sort_char();
+	//test_max_sub_array();
+	test_select();
 }

@@ -1,14 +1,15 @@
 #ifndef HASH_TABLE_OADDR_H
 #define HASH_TABLE_OADDR_H
 
-// Hash Table Open Addressing
-struct htoa_item {
-	char *key;
-	char *value;
-};
+#include "ht_item.h"
+
+/* Hash Table Open Addressing
+ * Linear probing
+ * Drawback: clustering
+ */
 
 struct htoa {
-	struct htoa_item **ht;
+	ht_item **ht;
 	int size;
 	int count;
 };
@@ -20,7 +21,7 @@ int htoa_delete_item(struct htoa *ht, char *key, int klen);
 void htoa_delete(struct htoa *ht);
 
 
-static struct htoa_item **new_ht_array(int size);
+static ht_item **new_ht_array(int size);
 static void check_size(struct htoa *ht);
 static void resize(struct htoa *ht, int new_aprox_size);
 static void rehash(struct htoa *ht, struct htoa *nht);

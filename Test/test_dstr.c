@@ -6,8 +6,9 @@
 #include "../Dstr/queue.h"
 #include "../Dstr/circ_link_list.h"
 #include "../Dstr/binary_tree.h"
-#include "../Dstr/hash_table.h"
+#include "../Dstr/hash_table_schain.h"
 #include "../Dstr/hash_table_oaddr.h"
+#include "../Dstr/hashtbl_oaddr_dblh.h"
 #include "../Algorithms/hash_function.h"
 #include "../Dstr/graph.h"
 #include "../Dstr/heap.h"
@@ -17,6 +18,23 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
+void test_hashtable_open_addr_dbl_hash()
+{
+	ht_dh *h = htd_init(11);
+	htd_insert(h, "hello", "bye");
+	htd_insert(h, "wow", "cool");
+	assert_int_eq(h->count, 2, "htd size");
+	assert_int_eq(h->size, 11, "htd size");
+	assert_str_eq(htd_search(h, "hello"), "bye", "htd search");
+	assert_str_eq(htd_search(h, "wow"), "cool", "htd search");
+
+	htd_insert(h, "nice", "great");
+	assert_int_eq(h->count, 3, "htd size");
+	assert_int_eq(h->size, 11, "htd size");
+	assert_str_eq(htd_search(h, "nice"), "great", "htd search");
+	htd_free(h);
+}
 
 void test_rbt()
 {
@@ -224,24 +242,23 @@ void test_hashing()
 	assert_int_eq(hash_simple("tree", 4, 31, 11), 10, "hashing");
 }
 
-void test_hash_table()
+void test_hash_table_sep_chain()
 {
-	struct hash_table *ht;
-	ht = ht_init();
-	ht_insert(ht, "moon", 4, "sun", 3);
-	assert_str_eq(ht_search(ht, "moon", 4), "sun", "ht1");
-	assert_str_eq(ht_search(ht, "hello", 5), NULL, "ht2");
-	ht_insert(ht, "tree", 4, "bush", 4);
-	assert_str_eq(ht_search(ht, "tree", 4), "bush", "ht3");
-	assert_str_eq(ht_search(ht, "hello", 5), NULL, "ht4");
+	htsc *ht = htsc_init();
+	htsc_insert(ht, "moon", 4, "sun", 3);
+	assert_str_eq(htsc_search(ht, "moon", 4), "sun", "ht1");
+	assert_str_eq(htsc_search(ht, "hello", 5), NULL, "ht2");
+	htsc_insert(ht, "tree", 4, "bush", 4);
+	assert_str_eq(htsc_search(ht, "tree", 4), "bush", "ht3");
+	assert_str_eq(htsc_search(ht, "hello", 5), NULL, "ht4");
 
-	ht_insert(ht, "qwer", 4, "aaaa", 4);
-	ht_insert(ht, "asdf", 4, "bbbb", 4);
-	ht_insert(ht, "zxcv", 4, "cccc", 4);
-	ht_insert(ht, "fdas", 4, "dddd", 4);
-	ht_insert(ht, "fghj", 4, "eeee", 4);
-	assert_str_eq(ht_search(ht, "fdas", 4), "dddd", "ht5");
-	ht_delete(ht);
+	htsc_insert(ht, "qwer", 4, "aaaa", 4);
+	htsc_insert(ht, "asdf", 4, "bbbb", 4);
+	htsc_insert(ht, "zxcv", 4, "cccc", 4);
+	htsc_insert(ht, "fdas", 4, "dddd", 4);
+	htsc_insert(ht, "fghj", 4, "eeee", 4);
+	assert_str_eq(htsc_search(ht, "fdas", 4), "dddd", "ht5");
+	htsc_delete(ht);
 }
 
 void test_hash_table_open_addressing()
@@ -260,21 +277,9 @@ void test_hash_table_open_addressing()
 	htoa_insert(ht, "zxcv", 4, "cccc", 4); //i=6 i=9
 	htoa_insert(ht, "fdas", 4, "dddd", 4); //i=7
 	htoa_insert(ht, "fghj", 4, "eeee", 4); //i=4
-	//htoa_traverse_tmp(ht);
+
 	assert_str_eq(htoa_search(ht, "fdas", 4), "dddd", "ht5");
 	assert_int_eq(htoa_delete_item(ht, "zxcv", 4), 1, "ht6");
-	//ht_delete(ht);
-	
-	//char word[4];
-	//char value[4];
-	//srand(time(NULL));
-	//for (int i = 0; i < 150; i++) {
-	//	for (int j = 0; j < 4; j++) {
-	//		word[j] = (rand() % 26) + 97;
-	//		value[j] = (rand() % 26) + 97;
-	//	}
-	//	htoa_insert(ht, word, 4, value, 4);
-	//}
 
 	// 6
 	htoa_delete(ht);
@@ -540,9 +545,9 @@ void run_data_structure_tests()
 	//test_queue_3();
 	//test_btree();
 	//test_hashing();
-	test_hash_table();
-	test_hash_table_open_addressing();
-	test_hashtable_openaddr_resizing();
+	//test_hash_table_sep_chain();
+	//test_hash_table_open_addressing();
+	//test_hashtable_openaddr_resizing();
 	//test_graph();
 	//test_graph_notcyclic();
 	//test_heap();
@@ -550,4 +555,5 @@ void run_data_structure_tests()
 	//test_max_heap_build();
 	//test_priority_queue();
 	//test_rbt();
+	test_hashtable_open_addr_dbl_hash();
 }

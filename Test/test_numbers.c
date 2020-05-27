@@ -1,4 +1,9 @@
 #include <stdlib.h>
+#include <string.h>
+
+#include "../lib_unittest/myunittest.h"
+#include "../Algorithms/numbers.h"
+#include "../Algorithms/prime_numbers.h"
 #include "test_numbers.h"
 #include "../Dstr/stack_ll.h"
 
@@ -98,7 +103,7 @@ void test_prime_numbers()
 {
 	int a[200];
 	memset(a, 0, 200*sizeof(int));
-	prime_numers(1000, a);
+	prime_numbers(1000, a);
 	assert_int_eq(a[10], 31, "Prime Numbers");
 }
 

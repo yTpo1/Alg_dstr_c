@@ -3,37 +3,22 @@
 #include <string.h>
 #include <math.h>
 
-#include "hash_table.h"
+#include "hash_table_schain.h"
 #include "../Algorithms/hash_function.h"
 
 #define HTPRIME 129
 
-struct hash_table *ht_init()
+htsc *htsc_init(void)
 {
-	//struct hash_table *ht = (struct hash_table *) malloc(sizeof(ht));
-	//struct hash_table *ht = (struct hash_table *) calloc(HTSIZE, sizeof(ht));
-	//struct hash_table *ht = (struct hash_table *) calloc(1, sizeof(struct hash_table));
-	struct hash_table *ht = (struct hash_table *) malloc(sizeof(struct hash_table));
-	ht->size = 11;
+	htsc *ht = (htsc *) malloc(sizeof(htsc));
+	ht->size = 11; // max buckets, should be prime
 	ht->ht = (struct htll_item **) malloc(ht->size * sizeof(struct htll_item *));
 	for (int i = 0; i < ht->size; i++)
 		ht->ht[i] = NULL;
 	return ht;
 }
 
-//void ht_delete(struct hash_table *ht)
-//{
-//	for (int i = 0; i < ht->size; i++)
-//		if (ht->ht[i] != NULL) {
-//			free(ht->ht[i]->value);
-//			free(ht->ht[i]->key);
-//			free(ht->ht[i]);
-//		}
-//	free(ht->ht);
-//	free(ht);
-//}
-
-void ht_delete(struct hash_table *ht)
+void htsc_delete(htsc *ht)
 {
 	struct htll_item *tmp = NULL;
 	struct htll_item *tmpnext = NULL;
@@ -56,7 +41,7 @@ void ht_delete(struct hash_table *ht)
 }
 
 
-void ht_insert(struct hash_table *ht, char *key, int klen, char *value, int vlen)
+void htsc_insert(htsc *ht, char *key, int klen, char *value, int vlen)
 {
 	struct htll_item *ht_i = NULL;
 	unsigned index = hash_simple(key, klen, HTPRIME, ht->size);
@@ -78,7 +63,7 @@ void ht_insert(struct hash_table *ht, char *key, int klen, char *value, int vlen
 	ht_i->next->value = strndup(value, vlen);
 }
 
-char *ht_search(struct hash_table *ht, char *key, int len)
+char *htsc_search(htsc *ht, char *key, int len)
 {
 	struct htll_item *ht_i;
 	unsigned index = hash_simple(key, len, HTPRIME, ht->size);

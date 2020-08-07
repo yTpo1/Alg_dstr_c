@@ -7,11 +7,7 @@ Note:
 
 MEMORY: ALWAYS MAKE SURE ALL VARIABLES ARE INITIALIZED TO 0 OR NULL!!!! ALWAYS!!!! Use calloc where applicable. memset to 0 and so on
 
-## Number:
-[numbers](Docs/numbers_math.md)
-
-
-## Array:
+# Array:
 Array also correspond directly to vectors, the mathematical term for indexed list of objects. 
 Two-dimentsional arrays correspond to matrices. [src](#b-alg-c-segw)
 * Find Median
@@ -22,6 +18,11 @@ Search:
 
 ## Sorting Algorithms:
 [Sorting](Docs/sorting.md)
+
+## Searching
+* backtracking
+* sorting
+* depth-first search & breadth-first search (graphs)
 
 ## String:
 * String with Reverse Polish notation/postfix to stack
@@ -68,12 +69,21 @@ Implemented:
 #### Practical Aplications:
 * https://stackoverflow.com/questions/1539069/practical-uses-of-different-data-structures
 
+# Dynamic Programming
+* Basic
+* Advanced
+
 # Cryptography
 * Caesar
 * Polyalphabetic
-
 * https://www.youtube.com/watch?v=mbtI3w5qxnI&list=PL6qqFPx9xQ1hLOoYAiQ-Me0xa2nlDTjys
 * https://www.khanacademy.org/computing/computer-science/cryptography
+
+# Math and Numbers
+* [numbers](Docs/numbers_math.md)
+* Number Theory
+* Counting
+* Geometry
 
 ## Reusability
 * How to build reusable data types and algorithms in C?

@@ -1,7 +1,7 @@
 #ifndef HASH_TABLE_OADDR_DBLEHASH_H
 #define HASH_TABLE_OADDR_DBLEHASH_H
 
-/* Hash Table, implemented with double hasing */
+/* Hash Table, implemented with open addresing and double hasing */
 
 #include "ht_item.h"
 

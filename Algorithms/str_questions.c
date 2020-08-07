@@ -3,6 +3,23 @@
 
 #define AMAX 1000
 
+char first_nonrep_char(char s[], int size)
+{
+	int nonrep = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = i + 1; j < size; j++) {
+			if (s[i] == s[j]) {
+				nonrep = 1;
+				break;
+			}
+		}
+		if (nonrep == 0)
+			return s[i];
+		nonrep = 0;
+	}
+	return '0';
+}
+
 void rmv_char_from_str(char s[], char c, int size){
     int j=0, count_removed = 0;
     for(int i = 0; i<size; i++){

@@ -43,6 +43,9 @@ Search:
 |Doubly Linked List|O(N)|O(N)|O(1)|O(1)|
 |Binary Tree|O(N)|O(log N)|O(log N)|O(log N)|
 |Graph|-|O(1)|-|-|
+|stack|
+|queue|
+|set|
 
 Operations:
 * Initialize the data structure
